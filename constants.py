@@ -53,6 +53,7 @@ THEME_ACCENT   = "bold cyan"
 DEFAULT_CONFIG: dict = {
     "tools_dir":      str(USER_TOOLS_DIR),
     "version":        VERSION,
+    "lang":           "en",
     "theme":          "magenta",
     "show_archived":  False,
     "sudo_binary":    "sudo",

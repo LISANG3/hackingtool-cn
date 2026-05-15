@@ -7,7 +7,7 @@ from rich import box
 
 class DebInject(HackingTool):
     TITLE = "Debinject"
-    DESCRIPTION = "Debinject is a tool that inject malicious code into *.debs"
+    DESCRIPTION = "Debinject 是一个将恶意代码注入到 *.deb 包中的工具"
     INSTALL_COMMANDS = [
         "git clone https://github.com/UndeadSec/Debinject.git"]
     RUN_COMMANDS = ["cd Debinject;python debinject.py"]
@@ -16,8 +16,8 @@ class DebInject(HackingTool):
 
 class Pixload(HackingTool):
     TITLE = "Pixload"
-    DESCRIPTION = "Pixload -- Image Payload Creating tools \n " \
-                  "Pixload is Set of tools for creating/injecting payload into images."
+    DESCRIPTION = "Pixload -- 图片 Payload 创建工具\n " \
+                  "Pixload 是一组用于创建/注入 payload 到图片中的工具。"
     INSTALL_COMMANDS = [
         "sudo apt install libgd-perl libimage-exiftool-perl libstring-crc32-perl",
         "git clone https://github.com/chinarulezzz/pixload.git"
@@ -29,7 +29,7 @@ class Pixload(HackingTool):
 
 
 class PayloadInjectorTools(HackingToolsCollection):
-    TITLE = "Payload Injector"
+    TITLE = "Payload 注入器"
     TOOLS = [
         DebInject(),
         Pixload()

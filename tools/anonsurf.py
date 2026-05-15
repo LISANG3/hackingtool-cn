@@ -1,14 +1,12 @@
 import os
 
 from core import HackingTool, HackingToolsCollection, console
+from i18n import t
 
 
 class AnonymouslySurf(HackingTool):
     TITLE = "Anonymously Surf"
-    DESCRIPTION = (
-        "It automatically overwrites the RAM when the system shuts down\n"
-        "and also changes your IP address."
-    )
+    DESCRIPTION = "在系统关机时自动覆盖 RAM，并更改你的 IP 地址。"
     # Bug 28 fix: was "cd kali-anonsurf && ./installer.sh && cd .. && sudo rm -r kali-anonsurf"
     # Deleting the source on install means there is no retry if install fails.
     # Now kept in a separate step so failure does not destroy the source.
@@ -25,13 +23,13 @@ class AnonymouslySurf(HackingTool):
 
     def stop(self):
         import subprocess
-        console.print("[bold magenta]Stopping Anonsurf...[/bold magenta]")
+        console.print(t("anonsurf.stopping"))
         subprocess.run(["sudo", "anonsurf", "stop"])
 
 
 class Multitor(HackingTool):
     TITLE = "Multitor"
-    DESCRIPTION = "How to stay in multi places at the same time."
+    DESCRIPTION = "如何同时在多个地方保持连接。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/trimstray/multitor.git",
         "cd multitor && sudo bash setup.sh install",
@@ -47,7 +45,7 @@ class Multitor(HackingTool):
 
 
 class AnonSurfTools(HackingToolsCollection):
-    TITLE = "Anonymously Hiding Tools"
+    TITLE = t("category.anonsurf")
     TOOLS = [
         AnonymouslySurf(),
         Multitor(),

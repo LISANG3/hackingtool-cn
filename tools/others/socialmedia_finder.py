@@ -7,11 +7,12 @@ from rich.panel import Panel
 from rich.prompt import Prompt
 from rich import box
 
+from i18n import t
+
 
 class FacialFind(HackingTool):
     TITLE = "Find SocialMedia By Facial Recognation System"
-    DESCRIPTION = "A Social Media Mapping Tool that correlates profiles\n " \
-                  "via facial recognition across different sites."
+    DESCRIPTION = "一种社交媒体映射工具，通过面部识别关联不同网站上的个人资料。"
     INSTALL_COMMANDS = [
         "sudo apt install -y software-properties-common",
         "sudo add-apt-repository ppa:mozillateam/firefox-next && sudo apt update && sudo apt upgrade",
@@ -33,14 +34,14 @@ class FacialFind(HackingTool):
         setup_dir = get_tools_dir() / "social_mapper" / "setup"
         subprocess.run(["python3", "social_mapper.py", "-h"], cwd=str(setup_dir))
         console.print(
-            "[bold magenta]Set username and password in social_mapper.py before running.[/]\n"
-            "[magenta]Usage: python social_mapper.py -f <folder> -i <path> -m fast <AcName> -fb -tw[/]"
+            "[bold magenta]" + t("socialface.enter_credentials") + "[/]\n"
+            "[magenta]" + t("socialface.usage") + "[/]"
         )
 
 
 class FindUser(HackingTool):
     TITLE = "Find SocialMedia By UserName"
-    DESCRIPTION = "Find usernames across over 75 social networks"
+    DESCRIPTION = "在超过 75 个社交网络中查找用户名"
     INSTALL_COMMANDS = [
         "git clone https://github.com/xHak9x/finduser.git",
         "cd finduser && sudo chmod +x finduser.sh"
@@ -51,8 +52,8 @@ class FindUser(HackingTool):
 
 class Sherlock(HackingTool):
     TITLE = "Sherlock"
-    DESCRIPTION = "Hunt down social media accounts by username across social networks \n " \
-                  "For More Usage \n" \
+    DESCRIPTION = "通过用户名在社交网络中搜索社交媒体账户。\n" \
+                  "更多用法:\n" \
                   "\t >>python3 sherlock --help"
     INSTALL_COMMANDS = [
         "git clone https://github.com/sherlock-project/sherlock.git",
@@ -63,7 +64,7 @@ class Sherlock(HackingTool):
     def run(self):
         from config import get_tools_dir
         from rich.prompt import Prompt
-        name = Prompt.ask("Enter Username")
+        name = Prompt.ask(t("prompt.enter_username"))
         # Bug 3 fix: os.chdir() replaced with cwd= parameter
         subprocess.run(
             ["python3", "sherlock", name],
@@ -73,19 +74,17 @@ class Sherlock(HackingTool):
 
 class SocialScan(HackingTool):
     TITLE = "SocialScan | Username or Email"
-    DESCRIPTION = "Check email address and username availability on online " \
-                  "platforms with 100% accuracy"
+    DESCRIPTION = "以 100% 的准确率检查邮箱地址和用户名在在线平台上的可用性。"
     INSTALL_COMMANDS = ["pip install --user socialscan"]
     PROJECT_URL = "https://github.com/iojw/socialscan"
 
     def run(self):
-        name = input(
-            "Enter Username or Emailid (if both then please space between email & username) >> ")
+        name = input(t("prompt.enter_username_email"))
         subprocess.run(["sudo", "socialscan", f"{name}"])
 
 
 class SocialMediaFinderTools(HackingToolsCollection):
-    TITLE = "SocialMedia Finder"
+    TITLE = "社交媒体查找"
     TOOLS = [
         FacialFind(),
         FindUser(),

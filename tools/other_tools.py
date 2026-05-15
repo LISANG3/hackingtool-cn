@@ -13,21 +13,22 @@ from tools.others.socialmedia_finder import SocialMediaFinderTools
 from tools.others.web_crawling import WebCrawlingTools
 from tools.others.wifi_jamming import WifiJammingTools
 
+from i18n import t
+
 from rich.panel import Panel
 from rich.prompt import Prompt
 
 
 class HatCloud(HackingTool):
     TITLE = "HatCloud(Bypass CloudFlare for IP)"
-    DESCRIPTION = "HatCloud build in Ruby. It makes bypass in CloudFlare for " \
-                  "discover real IP."
+    DESCRIPTION = "HatCloud 使用 Ruby 构建，可绕过 CloudFlare 发现真实 IP。"
     INSTALL_COMMANDS = ["git clone https://github.com/HatBashBR/HatCloud.git"]
     PROJECT_URL = "https://github.com/HatBashBR/HatCloud"
 
     def run(self):
         from config import get_tools_dir
         from rich.prompt import Prompt
-        site = Prompt.ask("Enter Site")
+        site = Prompt.ask(t("prompt.enter_site"))
         # Bug 3 fix: os.chdir() replaced with cwd= parameter
         subprocess.run(
             ["sudo", "ruby", "hatcloud.rb", "-b", site],
@@ -36,7 +37,7 @@ class HatCloud(HackingTool):
 
 
 class OtherTools(HackingToolsCollection):
-    TITLE = "Other tools"
+    TITLE = t("category.other")
     TOOLS = [
         SocialMediaBruteforceTools(),
         AndroidAttackTools(),

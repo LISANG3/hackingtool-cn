@@ -6,6 +6,7 @@ from core import validate_input
 from rich.panel import Panel
 from rich.prompt import Prompt
 
+from i18n import t
 
 class SteganoHide(HackingTool):
     TITLE = "SteganoHide"
@@ -13,43 +14,43 @@ class SteganoHide(HackingTool):
 
     def run(self):
         choice_run = input(
-            "[1] Hide\n"
-            "[2] Extract\n"
-            "[99]Cancel\n"
+            f"[1] {t('tool.hide')}\n"
+            f"[2] {t('tool.extract')}\n"
+            f"[99]{t('prompt.cancel')}\n"
             ">> "
         )
         choice_run = validate_input(choice_run, [1, 2, 99])
         if choice_run is None:
-            console.print("[bold red]Please choose a valid input[/bold red]")
+            console.print(f"[bold red]{t('prompt.choose_valid')}[/bold red]")
             return self.run()
 
         if choice_run == 99:
             return
 
         if choice_run == 1:
-            file_hide = input("Enter Filename to Embed (1.txt) >> ")
-            file_to_be_hide = input("Enter Cover Filename (test.jpeg) >> ")
+            file_hide = input(t("prompt.enter_embed_file"))
+            file_to_be_hide = input(t("prompt.enter_cover_file"))
             subprocess.run(["steghide", "embed", "-cf", file_to_be_hide, "-ef", file_hide])
 
         elif choice_run == 2:
-            from_file = input("Enter Filename to Extract Data From >> ")
+            from_file = input(t("prompt.enter_extract_file"))
             subprocess.run(["steghide", "extract", "-sf", from_file])
 
 
 class StegnoCracker(HackingTool):
     TITLE = "StegnoCracker"
-    DESCRIPTION = "SteganoCracker uncovers hidden data inside files using brute-force utility"
+    DESCRIPTION = "SteganoCracker 通过暴力破解工具揭示文件中隐藏的数据"
     INSTALL_COMMANDS = ["pip3 install stegcracker && pip3 install stegcracker -U --force-reinstall"]
 
     def run(self):
-        filename = input("Enter Filename >> ")
-        passfile = input("Enter Wordlist Filename >> ")
+        filename = input(t("prompt.enter_filename"))
+        passfile = input(t("prompt.enter_wordlist_filename"))
         subprocess.run(["stegcracker", filename, passfile])
 
 
 class StegoCracker(HackingTool):
     TITLE = "StegoCracker"
-    DESCRIPTION = "StegoCracker lets you hide and retrieve data in image or audio files"
+    DESCRIPTION = "StegoCracker 让你在图像或音频文件中隐藏和提取数据"
     INSTALL_COMMANDS = [
         "git clone https://github.com/W1LDN16H7/StegoCracker.git",
         "sudo chmod -R 755 StegoCracker"
@@ -63,7 +64,7 @@ class StegoCracker(HackingTool):
 
 class Whitespace(HackingTool):
     TITLE = "Whitespace"
-    DESCRIPTION = "Use whitespace and unicode characters for steganography"
+    DESCRIPTION = "使用空白字符和 Unicode 字符进行隐写术"
     INSTALL_COMMANDS = [
         "git clone https://github.com/beardog108/snow10.git",
         "sudo chmod -R 755 snow10"
@@ -73,7 +74,7 @@ class Whitespace(HackingTool):
 
 
 class SteganographyTools(HackingToolsCollection):
-    TITLE = "Steganography Tools"
+    TITLE = t("category.stegano")
     TOOLS = [SteganoHide(), StegnoCracker(), StegoCracker(), Whitespace()]
 
 if __name__ == "__main__":

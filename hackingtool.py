@@ -30,6 +30,7 @@ from rich.columns import Columns
 
 from core import HackingToolsCollection, clear_screen, console
 from constants import VERSION_DISPLAY, REPO_WEB_URL
+from i18n import t
 from config import get_tools_dir
 from tools.anonsurf import AnonSurfTools
 from tools.ddos import DDOSTools
@@ -59,27 +60,27 @@ from tools.mobile_security import MobileSecurityTools
 # menu_label is the concise name shown in the 2-column main menu grid.
 # full_title is shown when entering the category.
 tool_definitions = [
-    ("Anonymously Hiding Tools",           "🛡 ", "Anonymously Hiding"),
-    ("Information gathering tools",        "🔍",  "Information Gathering"),
-    ("Wordlist Generator",                 "📚",  "Wordlist Generator"),
-    ("Wireless attack tools",              "📶",  "Wireless Attack"),
-    ("SQL Injection Tools",                "🧩",  "SQL Injection"),
-    ("Phishing attack tools",              "🎣",  "Phishing Attack"),
-    ("Web Attack tools",                   "🌐",  "Web Attack"),
-    ("Post exploitation tools",            "🔧",  "Post Exploitation"),
-    ("Forensic tools",                     "🕵 ", "Forensics"),
-    ("Payload creation tools",             "📦",  "Payload Creation"),
-    ("Exploit framework",                  "🧰",  "Exploit Framework"),
-    ("Reverse engineering tools",          "🔁",  "Reverse Engineering"),
-    ("DDOS Attack Tools",                  "⚡",  "DDOS Attack"),
-    ("Remote Administrator Tools (RAT)",   "🖥 ", "Remote Admin (RAT)"),
-    ("XSS Attack Tools",                   "💥",  "XSS Attack"),
-    ("Steganography tools",                "🖼 ", "Steganography"),
-    ("Active Directory Tools",             "🏢",  "Active Directory"),
-    ("Cloud Security Tools",               "☁ ",  "Cloud Security"),
-    ("Mobile Security Tools",              "📱",  "Mobile Security"),
-    ("Other tools",                        "✨",  "Other Tools"),
-    ("Update or Uninstall | Hackingtool",  "♻ ",  "Update / Uninstall"),
+    (t("category.anonsurf"),              "🛡 ", t("category.anonsurf_short")),
+    (t("category.info_gathering"),        "🔍",  t("category.info_gathering_short")),
+    (t("category.wordlist"),              "📚",  t("category.wordlist_short")),
+    (t("category.wireless"),              "📶",  t("category.wireless_short")),
+    (t("category.sql_injection"),         "🧩",  t("category.sql_injection_short")),
+    (t("category.phishing"),              "🎣",  t("category.phishing_short")),
+    (t("category.web_attack"),            "🌐",  t("category.web_attack_short")),
+    (t("category.post_exploit"),          "🔧",  t("category.post_exploit_short")),
+    (t("category.forensics"),             "🕵 ", t("category.forensics_short")),
+    (t("category.payload"),               "📦",  t("category.payload_short")),
+    (t("category.exploit"),               "🧰",  t("category.exploit_short")),
+    (t("category.reverse"),               "🔁",  t("category.reverse_short")),
+    (t("category.ddos"),                  "⚡",  t("category.ddos_short")),
+    (t("category.rat"),                   "🖥 ", t("category.rat_short")),
+    (t("category.xss"),                   "💥",  t("category.xss_short")),
+    (t("category.stegano"),               "🖼 ", t("category.stegano_short")),
+    (t("category.active_directory"),      "🏢",  t("category.active_directory_short")),
+    (t("category.cloud"),                 "☁ ",  t("category.cloud_short")),
+    (t("category.mobile"),                "📱",  t("category.mobile_short")),
+    (t("category.other"),                 "✨",  t("category.other_short")),
+    (t("category.update_uninstall"),      "♻ ",  t("category.update_uninstall_short")),
 ]
 
 all_tools = [
@@ -117,32 +118,32 @@ class AllTools(HackingToolsCollection):
 def show_help():
     console.print(Panel(
         Text.assemble(
-            ("  Main menu\n", "bold white"),
+            ("  " + t("help.main_menu") + "\n", "bold white"),
             ("  ─────────────────────────────────────\n", "dim"),
-            ("  1–20   ", "bold cyan"), ("open a category\n", "white"),
-            ("  21     ", "bold cyan"), ("Update / Uninstall hackingtool\n", "white"),
-            ("  / or s ", "bold cyan"), ("search tools by name or keyword\n", "white"),
-            ("  t      ", "bold cyan"), ("filter tools by tag (osint, web, c2, ...)\n", "white"),
-            ("  r      ", "bold cyan"), ("recommend tools for a task\n", "white"),
-            ("  ?      ", "bold cyan"), ("show this help\n", "white"),
-            ("  q      ", "bold cyan"), ("quit hackingtool\n\n", "white"),
-            ("  Inside a category\n", "bold white"),
+            ("  1–20   ", "bold cyan"), (t("help.open_category") + "\n", "white"),
+            ("  21     ", "bold cyan"), (t("help.update_uninstall") + "\n", "white"),
+            ("  / or s ", "bold cyan"), (t("help.search_tools") + "\n", "white"),
+            ("  t      ", "bold cyan"), (t("help.filter_tags") + "\n", "white"),
+            ("  r      ", "bold cyan"), (t("help.recommend_tools") + "\n", "white"),
+            ("  ?      ", "bold cyan"), (t("help.show_help") + "\n", "white"),
+            ("  q      ", "bold cyan"), (t("help.quit") + "\n\n", "white"),
+            ("  " + t("help.inside_category") + "\n", "bold white"),
             ("  ─────────────────────────────────────\n", "dim"),
-            ("  1–N    ", "bold cyan"), ("select a tool\n", "white"),
-            ("  99     ", "bold cyan"), ("back to main menu\n", "white"),
-            ("  98     ", "bold cyan"), ("open project page (if available)\n\n", "white"),
-            ("  Inside a tool\n", "bold white"),
+            ("  1–N    ", "bold cyan"), (t("help.select_tool") + "\n", "white"),
+            ("  99     ", "bold cyan"), (t("help.back_to_main") + "\n", "white"),
+            ("  98     ", "bold cyan"), (t("help.open_project") + "\n\n", "white"),
+            ("  " + t("help.inside_tool") + "\n", "bold white"),
             ("  ─────────────────────────────────────\n", "dim"),
-            ("  1      ", "bold cyan"), ("install tool\n", "white"),
-            ("  2      ", "bold cyan"), ("run tool\n", "white"),
-            ("  99     ", "bold cyan"), ("back to category\n", "white"),
+            ("  1      ", "bold cyan"), (t("help.install_tool") + "\n", "white"),
+            ("  2      ", "bold cyan"), (t("help.run_tool") + "\n", "white"),
+            ("  99     ", "bold cyan"), (t("help.back_to_category") + "\n", "white"),
         ),
-        title="[bold magenta] ? Quick Help [/bold magenta]",
+        title="[bold magenta] " + t("help.title") + " [/bold magenta]",
         border_style="magenta",
         box=box.ROUNDED,
         padding=(0, 2),
     ))
-    Prompt.ask("[dim]Press Enter to return[/dim]", default="")
+    Prompt.ask("[dim]" + t("help.press_enter") + "[/dim]", default="")
 
 
 # ── Header: ASCII art + live system info ──────────────────────────────────────
@@ -163,18 +164,7 @@ _BANNER_ART = [
     "           ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝",
 ]
 
-_QUOTES = [
-    '"The quieter you become, the more you can hear."',
-    '"Offense informs defense."',
-    '"There is no patch for human stupidity."',
-    '"In God we trust. All others we monitor."',
-    '"Hackers are the immune system of the internet."',
-    '"Every system is hackable — know yours before others do."',
-    '"Enumerate before you exploit."',
-    '"A scope defines your playground."',
-    '"The more you sweat in training, the less you bleed in battle."',
-    '"Security is a process, not a product."',
-]
+_QUOTES = t("quotes")
 
 
 def _sys_info() -> dict:
@@ -218,16 +208,16 @@ def _build_header() -> Panel:
 
     # 12 stat lines paired with the 12 art lines
     stat_lines = [
-        ("  os      ›  ", info["os"][:34]),
-        ("  kernel  ›  ", info["kernel"][:34]),
-        ("  user    ›  ", f"{info['user']} @ {info['host'][:20]}"),
-        ("  ip      ›  ", info["ip"]),
-        ("  tools   ›  ", f"{len(all_tools)} categories · 185+ modules"),
-        ("  session ›  ", info["time"]),
+        ("  " + t("header.os") + "      ›  ", info["os"][:34]),
+        ("  " + t("header.kernel") + "  ›  ", info["kernel"][:34]),
+        ("  " + t("header.user") + "    ›  ", f"{info['user']} @ {info['host'][:20]}"),
+        ("  " + t("header.ip") + "      ›  ", info["ip"]),
+        ("  " + t("header.tools") + "   ›  ", t("header.tools_count", n=len(all_tools))),
+        ("  " + t("header.session") + " ›  ", info["time"]),
         ("", ""),
-        ("  python  ›  ", f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"),
-        ("  arch    ›  ", platform.machine()),
-        ("  status  ›  ", "✔ READY"),
+        ("  " + t("header.python") + "  ›  ", f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"),
+        ("  " + t("header.arch") + "    ›  ", platform.machine()),
+        ("  " + t("header.status") + "  ›  ", "✔ " + t("header.ready")),
         ("", ""),
         ("", ""),
     ]
@@ -253,12 +243,12 @@ def _build_header() -> Panel:
     body.add_row(grid)
     body.add_row(Text(""))
     body.add_row(Text(f"  {quote}", style="italic dim"))
-    body.add_row(Text("  ⚠  For authorized security testing only",
+    body.add_row(Text("  ⚠  " + t("warning.authorized_only"),
                       style="bold dim red"))
 
     return Panel(
         body,
-        title=f"[bold bright_magenta][ HackingTool {VERSION_DISPLAY} ][/bold bright_magenta]",
+        title=f"[bold bright_magenta]{t('banner.title', version=VERSION_DISPLAY)}[/bold bright_magenta]",
         title_align="left",
         subtitle=f"[dim][ {info['time']} ][/dim]",
         subtitle_align="right",
@@ -301,7 +291,7 @@ def build_menu():
 
     console.print(Panel(
         grid,
-        title="[bold magenta] Select a Category [/bold magenta]",
+        title="[bold magenta] " + t("menu.select_category") + " [/bold magenta]",
         border_style="bright_magenta",
         box=box.ROUNDED,
         padding=(0, 1),
@@ -317,7 +307,7 @@ def build_menu():
     # ── Claude-style dual-line prompt area ──
     console.print(Rule(style="dim magenta"))
     console.print(
-        "  [dim cyan]/[/dim cyan][dim]search[/dim]  "
+        "  [dim cyan]/[/dim cyan][dim]" + t("prompt.search").replace("/ ", "") + "[/dim]  "
         "[dim cyan]t[/dim cyan] [dim]tags[/dim]  "
         "[dim cyan]r[/dim cyan] [dim]recommend[/dim]  "
         "[dim cyan]?[/dim cyan] [dim]help[/dim]  "
@@ -389,35 +379,35 @@ def filter_by_tag():
     # Show tags in a compact grid
     console.print(Panel(
         "  ".join(f"[bold cyan]{t}[/bold cyan]([dim]{len(tag_index[t])}[/dim])" for t in sorted_tags),
-        title="[bold magenta] Available Tags [/bold magenta]",
+        title="[bold magenta] " + t("tag.title") + " [/bold magenta]",
         border_style="magenta", box=box.ROUNDED, padding=(0, 2),
     ))
 
-    tag = Prompt.ask("[bold cyan]Enter tag[/bold cyan]", default="").strip().lower()
+    tag = Prompt.ask(f"[bold cyan]{t('prompt.enter_tag')}[/bold cyan]", default="").strip().lower()
     if not tag or tag not in tag_index:
         if tag:
-            console.print(f"[dim]Tag '{tag}' not found.[/dim]")
-            Prompt.ask("[dim]Press Enter to return[/dim]", default="")
+            console.print(f"[dim]{t('tag.not_found', tag=tag)}[/dim]")
+            Prompt.ask(f"[dim]{t('help.press_enter')}[/dim]", default="")
         return
 
     matches = tag_index[tag]
     table = Table(
-        title=f"Tools tagged '{tag}'",
+        title=t("tag.results", tag=tag),
         box=box.SIMPLE_HEAD, show_lines=True,
     )
-    table.add_column("No.", justify="center", style="bold cyan", width=5)
+    table.add_column(t("menu.no"), justify="center", style="bold cyan", width=5)
     table.add_column("", width=2)
-    table.add_column("Tool", style="bold yellow", min_width=20)
-    table.add_column("Category", style="magenta", min_width=15)
+    table.add_column(t("menu.tool"), style="bold yellow", min_width=20)
+    table.add_column(t("menu.category"), style="magenta", min_width=15)
 
     for i, (tool, cat) in enumerate(matches, start=1):
         status = "[green]✔[/green]" if tool.is_installed else "[dim]✘[/dim]"
         table.add_row(str(i), status, tool.TITLE, cat)
 
-    table.add_row("99", "", "Back to main menu", "")
+    table.add_row("99", "", t("menu.back_main"), "")
     console.print(table)
 
-    raw = Prompt.ask("[bold cyan]>[/bold cyan]", default="").strip()
+    raw = Prompt.ask("[bold cyan]" + t("prompt.select") + "[/bold cyan]", default="").strip()
     if not raw or raw == "99":
         return
     try:
@@ -458,20 +448,22 @@ _RECOMMENDATIONS = {
 def recommend_tools():
     """Show common tasks, user picks one, show matching tools."""
     table = Table(
-        title="What do you want to do?",
+        title=t("rec.title"),
         box=box.SIMPLE_HEAD,
     )
-    table.add_column("No.", justify="center", style="bold cyan", width=5)
+    table.add_column(t("menu.no"), justify="center", style="bold cyan", width=5)
     table.add_column("Task", style="bold yellow")
 
     tasks = list(_RECOMMENDATIONS.keys())
+    rec_tasks = t("rec.tasks")
     for i, task in enumerate(tasks, start=1):
-        table.add_row(str(i), task.title())
+        task_label = rec_tasks.get(task, task.title()) if isinstance(rec_tasks, dict) else task.title()
+        table.add_row(str(i), task_label)
 
-    table.add_row("99", "Back to main menu")
+    table.add_row("99", t("menu.back_main"))
     console.print(table)
 
-    raw = Prompt.ask("[bold cyan]>[/bold cyan]", default="").strip()
+    raw = Prompt.ask("[bold cyan]" + t("prompt.select") + "[/bold cyan]", default="").strip()
     if not raw or raw == "99":
         return
 
@@ -495,29 +487,30 @@ def recommend_tools():
                     matches.append((tool, cat))
 
         if not matches:
-            console.print("[dim]No tools found for this task.[/dim]")
-            Prompt.ask("[dim]Press Enter to return[/dim]", default="")
+            console.print(f"[dim]{t('rec.no_tools')}[/dim]")
+            Prompt.ask(f"[dim]{t('help.press_enter')}[/dim]", default="")
             return
 
+        task_label = rec_tasks.get(task, task.title()) if isinstance(rec_tasks, dict) else task.title()
         console.print(Panel(
-            f"[bold]Recommended tools for: {task.title()}[/bold]",
+            f"[bold]{t('rec.recommended', task=task_label)}[/bold]",
             border_style="green", box=box.ROUNDED,
         ))
 
         rtable = Table(box=box.SIMPLE_HEAD, show_lines=True)
-        rtable.add_column("No.", justify="center", style="bold cyan", width=5)
+        rtable.add_column(t("menu.no"), justify="center", style="bold cyan", width=5)
         rtable.add_column("", width=2)
-        rtable.add_column("Tool", style="bold yellow", min_width=20)
-        rtable.add_column("Category", style="magenta")
+        rtable.add_column(t("menu.tool"), style="bold yellow", min_width=20)
+        rtable.add_column(t("menu.category"), style="magenta")
 
         for i, (tool, cat) in enumerate(matches, start=1):
             status = "[green]✔[/green]" if tool.is_installed else "[dim]✘[/dim]"
             rtable.add_row(str(i), status, tool.TITLE, cat)
 
-        rtable.add_row("99", "", "Back", "")
+        rtable.add_row("99", "", t("prompt.back"), "")
         console.print(rtable)
 
-        raw2 = Prompt.ask("[bold cyan]>[/bold cyan]", default="").strip()
+        raw2 = Prompt.ask("[bold cyan]" + t("prompt.select") + "[/bold cyan]", default="").strip()
         if raw2 and raw2 != "99":
             try:
                 ridx = int(raw2)
@@ -530,7 +523,7 @@ def recommend_tools():
 def search_tools(query: str | None = None):
     """Search tools — accepts inline query or prompts for one."""
     if query is None:
-        query = Prompt.ask("[bold cyan]/ Search[/bold cyan]", default="").strip().lower()
+        query = Prompt.ask(f"[bold cyan]{t('prompt.search')}[/bold cyan]", default="").strip().lower()
     else:
         query = query.lower()
     if not query:
@@ -548,28 +541,28 @@ def search_tools(query: str | None = None):
             matches.append((tool, category))
 
     if not matches:
-        console.print(f"[dim]No tools found matching '{query}'[/dim]")
-        Prompt.ask("[dim]Press Enter to return[/dim]", default="")
+        console.print(f"[dim]{t('search.no_results', query=query)}[/dim]")
+        Prompt.ask(f"[dim]{t('help.press_enter')}[/dim]", default="")
         return
 
     # Display results
     table = Table(
-        title=f"Search results for '{query}'",
+        title=t("search.title", query=query),
         box=box.SIMPLE_HEAD, show_lines=True,
     )
-    table.add_column("No.", justify="center", style="bold cyan", width=5)
-    table.add_column("Tool", style="bold yellow", min_width=20)
-    table.add_column("Category", style="magenta", min_width=15)
-    table.add_column("Description", style="white", overflow="fold")
+    table.add_column(t("menu.no"), justify="center", style="bold cyan", width=5)
+    table.add_column(t("menu.tool"), style="bold yellow", min_width=20)
+    table.add_column(t("menu.category"), style="magenta", min_width=15)
+    table.add_column(t("menu.description"), style="white", overflow="fold")
 
     for i, (tool, cat) in enumerate(matches, start=1):
         desc = (tool.DESCRIPTION or "—").splitlines()[0]
         table.add_row(str(i), tool.TITLE, cat, desc)
 
-    table.add_row("99", "Back to main menu", "", "")
+    table.add_row("99", t("menu.back_main"), "", "")
     console.print(table)
 
-    raw = Prompt.ask("[bold cyan]>[/bold cyan]", default="").strip().lower()
+    raw = Prompt.ask("[bold cyan]" + t("prompt.select") + "[/bold cyan]", default="").strip().lower()
     if not raw or raw == "99":
         return
 
@@ -626,7 +619,7 @@ def interact_menu():
 
             if raw_lower in ("q", "quit", "exit"):
                 console.print(Panel(
-                    "[bold white on magenta]  Goodbye — Come Back Safely  [/bold white on magenta]",
+                    f"[bold white on magenta]  {t('goodbye')}  [/bold white on magenta]",
                     box=box.HEAVY, border_style="magenta",
                 ))
                 break
@@ -634,8 +627,8 @@ def interact_menu():
             try:
                 choice = int(raw_lower)
             except ValueError:
-                console.print("[red]⚠  Invalid input — enter a number, /query to search, or q to quit.[/red]")
-                Prompt.ask("[dim]Press Enter to continue[/dim]", default="")
+                console.print(f"[red]⚠  {t('error.invalid_input')}[/red]")
+                Prompt.ask(f"[dim]{t('help.press_enter_continue')}[/dim]", default="")
                 continue
 
             if 1 <= choice <= len(all_tools):
@@ -648,16 +641,16 @@ def interact_menu():
                     all_tools[choice - 1].show_options()
                 except Exception as e:
                     console.print(Panel(
-                        f"[red]Error while opening {title}[/red]\n{e}",
+                        f"[red]{t('error.opening_category', title=title)}[/red]\n{e}",
                         border_style="red",
                     ))
-                    Prompt.ask("[dim]Press Enter to return to main menu[/dim]", default="")
+                    Prompt.ask(f"[dim]{t('help.press_enter')}[/dim]", default="")
             else:
-                console.print(f"[red]⚠  Choose 1–{len(all_tools)}, ? for help, or q to quit.[/red]")
-                Prompt.ask("[dim]Press Enter to continue[/dim]", default="")
+                console.print(f"[red]⚠  {t('error.choose_range', max=len(all_tools))}[/red]")
+                Prompt.ask(f"[dim]{t('help.press_enter_continue')}[/dim]", default="")
 
         except KeyboardInterrupt:
-            console.print("\n[bold red]Interrupted — exiting[/bold red]")
+            console.print(f"\n[bold red]{t('warning.interrupted')}[/bold red]")
             break
 
 
@@ -668,19 +661,19 @@ def main():
         from os_detect import CURRENT_OS
 
         if CURRENT_OS.system == "windows":
-            console.print(Panel("[bold red]Please run this tool on Linux or macOS.[/bold red]"))
-            if Confirm.ask("Open guidance link in your browser?", default=True):
+            console.print(Panel(f"[bold red]{t('warning.windows')}[/bold red]"))
+            if Confirm.ask(t("about.open_guidance"), default=True):
                 webbrowser.open_new_tab(f"{REPO_WEB_URL}#windows")
             return
 
         if CURRENT_OS.system not in ("linux", "macos"):
-            console.print(f"[yellow]Unsupported OS: {CURRENT_OS.system}. Proceeding anyway...[/yellow]")
+            console.print(f"[yellow]{t('warning.unsupported_os', os=CURRENT_OS.system)}[/yellow]")
 
         get_tools_dir()   # ensures ~/.hackingtool/tools/ exists
         interact_menu()
 
     except KeyboardInterrupt:
-        console.print("\n[bold red]Exiting...[/bold red]")
+        console.print(f"\n[bold red]{t('warning.exiting')}[/bold red]")
 
 
 if __name__ == "__main__":

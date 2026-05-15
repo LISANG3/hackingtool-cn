@@ -1,13 +1,14 @@
 from rich.prompt import Prompt
 
 from core import HackingTool, HackingToolsCollection, console
+from i18n import t
 
 
 class WIFIPumpkin(HackingTool):
     TITLE = "WiFi-Pumpkin"
     DESCRIPTION = (
-        "The WiFi-Pumpkin is a rogue AP framework to easily create fake networks\n"
-        "while forwarding legitimate traffic to and from the unsuspecting target."
+        "WiFi-Pumpkin 是一个虚假 AP 框架，可轻松创建假网络\n"
+        "同时在无感知目标之间转发合法流量。"
     )
     INSTALL_COMMANDS = [
         "sudo apt install -y libssl-dev libffi-dev build-essential python3-pyqt5",
@@ -24,9 +25,8 @@ class WIFIPumpkin(HackingTool):
 class pixiewps(HackingTool):
     TITLE = "pixiewps"
     DESCRIPTION = (
-        "Pixiewps is a tool written in C used to bruteforce offline the WPS pin\n"
-        "exploiting the low or non-existing entropy of some Access Points "
-        "(pixie dust attack)."
+        "Pixiewps 是一款用 C 编写的工具，用于离线暴力破解 WPS PIN，\n"
+        "利用某些接入点的低熵或非熵（pixie dust 攻击）。"
     )
     INSTALL_COMMANDS = [
         # Bug 29 fix: removed wget https://pastebin.com/... (insecure download from pastebin)
@@ -39,20 +39,14 @@ class pixiewps(HackingTool):
     REQUIRES_WIFI = True
 
     def run(self):
-        console.print(
-            "[bold cyan]Usage:[/bold cyan]\n"
-            " 1. Put interface into monitor mode: [yellow]airmon-ng start <iface>[/yellow]\n"
-            " 2. Scan: [yellow]wash -i <mon-iface>[/yellow]\n"
-            " 3. Attack: [yellow]reaver -i <mon-iface> -b <BSSID> -c <ch> -vvv -K 1 -f[/yellow]\n"
-            " 4. Run: [yellow]pixiewps -h[/yellow]"
-        )
+        console.print(t("tool.pixiewps.usage"))
 
 
 class BluePot(HackingTool):
     TITLE = "Bluetooth Honeypot GUI Framework"
     DESCRIPTION = (
-        "You need at least 1 bluetooth receiver.\n"
-        "Install libbluetooth-dev (Ubuntu) / bluez-libs-devel (Fedora) / bluez-devel (openSUSE)."
+        "您需要至少 1 个蓝牙接收器。\n"
+        "安装 libbluetooth-dev (Ubuntu) / bluez-libs-devel (Fedora) / bluez-devel (openSUSE)。"
     )
     INSTALL_COMMANDS = [
         # Bug 15 fix: missing comma caused implicit string concatenation — two strings joined
@@ -67,7 +61,7 @@ class BluePot(HackingTool):
 
 class Fluxion(HackingTool):
     TITLE = "Fluxion"
-    DESCRIPTION = "Fluxion is a remake of linset by vk496 with enhanced functionality."
+    DESCRIPTION = "Fluxion 是 vk496 的 linset 的重制版，功能增强。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/FluxionNetwork/fluxion.git",
         "cd fluxion && chmod +x fluxion.sh",
@@ -81,9 +75,9 @@ class Fluxion(HackingTool):
 class Wifiphisher(HackingTool):
     TITLE = "Wifiphisher"
     DESCRIPTION = (
-        "Wifiphisher is a rogue Access Point framework for conducting red team engagements\n"
-        "or Wi-Fi security testing. Easily achieve man-in-the-middle position against\n"
-        "wireless clients by performing targeted Wi-Fi association attacks."
+        "Wifiphisher 是一个虚假接入点框架，用于进行红队演练\n"
+        "或 Wi-Fi 安全测试。通过执行有针对性的 Wi-Fi 关联攻击，\n"
+        "轻松实现对无线客户端的中间人攻击。"
     )
     INSTALL_COMMANDS = [
         "git clone https://github.com/wifiphisher/wifiphisher.git",
@@ -97,7 +91,7 @@ class Wifiphisher(HackingTool):
 
 class Wifite(HackingTool):
     TITLE = "Wifite"
-    DESCRIPTION = "Wifite is an automated wireless attack tool."
+    DESCRIPTION = "Wifite 是一款自动化无线攻击工具。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/derv82/wifite2.git",
         "cd wifite2 && pip install --user .",
@@ -111,8 +105,7 @@ class Wifite(HackingTool):
 class EvilTwin(HackingTool):
     TITLE = "EvilTwin"
     DESCRIPTION = (
-        "Fakeap — perform Evil Twin Attack by getting credentials "
-        "using a Fake page and Fake Access Point."
+        "Fakeap — 通过使用假页面和假接入点获取凭据来执行邪恶双子攻击。"
     )
     INSTALL_COMMANDS = ["git clone https://github.com/Z4nzu/fakeap.git"]
     RUN_COMMANDS = ["cd fakeap && sudo bash fakeap.sh"]
@@ -124,8 +117,7 @@ class EvilTwin(HackingTool):
 class Fastssh(HackingTool):
     TITLE = "Fastssh"
     DESCRIPTION = (
-        "Fastssh — multi-threaded scan and brute force attack against SSH protocol\n"
-        "using the most commonly used credentials."
+        "Fastssh — 使用最常用凭据对 SSH 协议进行多线程扫描和暴力破解攻击。"
     )
     INSTALL_COMMANDS = [
         "git clone https://github.com/Z4nzu/fastssh.git && cd fastssh && chmod +x fastssh.sh",
@@ -139,9 +131,9 @@ class Fastssh(HackingTool):
 class Howmanypeople(HackingTool):
     TITLE = "Howmanypeople"
     DESCRIPTION = (
-        "Count the number of people around you by monitoring wifi signals.\n"
-        "[@] WIFI ADAPTER REQUIRED\n"
-        "[*] It may be illegal to monitor networks for MAC addresses on networks you do not own."
+        "通过监控 WiFi 信号统计周围人数。\n"
+        "[@] 需要 WiFi 适配器\n"
+        "[*] 在您不拥有的网络上监视 MAC 地址可能是非法的。"
     )
     INSTALL_COMMANDS = [
         # Bug 14 fix: missing comma caused "sudo apt-get install tshark;sudo python3..."
@@ -157,8 +149,8 @@ class Howmanypeople(HackingTool):
 class Airgeddon(HackingTool):
     TITLE = "Airgeddon (Wireless Attack Suite)"
     DESCRIPTION = (
-        "Multi-use bash script for auditing wireless networks.\n"
-        "Covers WPA/WPA2, WEP, WPS, PMKID, evil twin, handshake capture and more."
+        "多用途 bash 脚本，用于审计无线网络。\n"
+        "涵盖 WPA/WPA2、WEP、WPS、PMKID、邪恶双子、握手包捕获等。"
     )
     SUPPORTED_OS = ["linux"]
     REQUIRES_WIFI = True
@@ -172,8 +164,8 @@ class Airgeddon(HackingTool):
 class Hcxdumptool(HackingTool):
     TITLE = "hcxdumptool (PMKID Capture)"
     DESCRIPTION = (
-        "Capture packets and PMKID hashes from WLAN devices.\n"
-        "Usage: hcxdumptool -i <iface> -o capture.pcapng --enable_status=1"
+        "从 WLAN 设备捕获数据包和 PMKID 哈希。\n"
+        "用法: hcxdumptool -i <iface> -o capture.pcapng --enable_status=1"
     )
     SUPPORTED_OS = ["linux"]
     REQUIRES_WIFI = True
@@ -188,8 +180,8 @@ class Hcxdumptool(HackingTool):
 class Hcxtools(HackingTool):
     TITLE = "hcxtools (PMKID/Hash Conversion)"
     DESCRIPTION = (
-        "Convert captured WLAN packets to hashcat/JtR-compatible format.\n"
-        "Usage: hcxpcapngtool -o hashes.txt capture.pcapng"
+        "将捕获的 WLAN 数据包转换为 hashcat/JtR 兼容格式。\n"
+        "用法: hcxpcapngtool -o hashes.txt capture.pcapng"
     )
     SUPPORTED_OS = ["linux"]
     INSTALL_COMMANDS = [
@@ -202,7 +194,7 @@ class Hcxtools(HackingTool):
 
 class Bettercap(HackingTool):
     TITLE = "Bettercap (Network/WiFi/BLE MITM)"
-    DESCRIPTION = "Swiss army knife for WiFi, BLE, HID, and Ethernet network recon and MITM attacks."
+    DESCRIPTION = "WiFi、BLE、HID 和以太网网络侦察和 MITM 攻击的瑞士军刀。"
     SUPPORTED_OS = ["linux"]
     INSTALL_COMMANDS = ["sudo apt-get install -y bettercap"]
     RUN_COMMANDS = ["sudo bettercap --help"]
@@ -210,7 +202,7 @@ class Bettercap(HackingTool):
 
 
 class WirelessAttackTools(HackingToolsCollection):
-    TITLE = "Wireless attack tools"
+    TITLE = t("category.wireless")
     TOOLS = [
         WIFIPumpkin(),
         pixiewps(),

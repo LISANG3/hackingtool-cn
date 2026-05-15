@@ -7,9 +7,9 @@ from rich import box
 
 class HashBuster(HackingTool):
     TITLE = "Hash Buster"
-    DESCRIPTION = "Features: \n " \
-                  "Automatic hash type identification \n " \
-                  "Supports MD5, SHA1, SHA256, SHA384, SHA512"
+    DESCRIPTION = "功能特点:\n " \
+                  "自动识别哈希类型\n " \
+                  "支持 MD5, SHA1, SHA256, SHA384, SHA512"
     INSTALL_COMMANDS = [
         "git clone https://github.com/s0md3v/Hash-Buster.git",
         "cd Hash-Buster;make install"
@@ -19,7 +19,7 @@ class HashBuster(HackingTool):
 
 
 class HashCrackingTools(HackingToolsCollection):
-    TITLE = "Hash cracking tools"
+    TITLE = "哈希破解工具"
     TOOLS = [HashBuster()]
 
 if __name__ == "__main__":

@@ -1,10 +1,11 @@
 from core import HackingTool
 from core import HackingToolsCollection
+from i18n import t
 
 
 class Prowler(HackingTool):
     TITLE = "Prowler (Cloud Security Scanner)"
-    DESCRIPTION = "Open-source security tool for AWS, Azure, GCP, and Kubernetes assessments."
+    DESCRIPTION = "用于 AWS、Azure、GCP 和 Kubernetes 评估的开源安全工具。"
     INSTALL_COMMANDS = ["pip install --user prowler"]
     RUN_COMMANDS = ["prowler --help"]
     PROJECT_URL = "https://github.com/prowler-cloud/prowler"
@@ -13,7 +14,7 @@ class Prowler(HackingTool):
 
 class ScoutSuite(HackingTool):
     TITLE = "ScoutSuite (Multi-Cloud Auditing)"
-    DESCRIPTION = "Multi-cloud security auditing tool for AWS, Azure, GCP, Alibaba, and Oracle."
+    DESCRIPTION = "用于 AWS、Azure、GCP、阿里云和 Oracle 的多云安全审计工具。"
     INSTALL_COMMANDS = ["pip install --user scoutsuite"]
     RUN_COMMANDS = ["scout --help"]
     PROJECT_URL = "https://github.com/nccgroup/ScoutSuite"
@@ -22,7 +23,7 @@ class ScoutSuite(HackingTool):
 
 class Pacu(HackingTool):
     TITLE = "Pacu (AWS Exploitation Framework)"
-    DESCRIPTION = "AWS exploitation framework for offensive security testing of AWS environments."
+    DESCRIPTION = "用于 AWS 环境进攻性安全测试的 AWS 利用框架。"
     INSTALL_COMMANDS = ["pip install --user pacu"]
     RUN_COMMANDS = ["pacu --help"]
     PROJECT_URL = "https://github.com/RhinoSecurityLabs/pacu"
@@ -31,7 +32,7 @@ class Pacu(HackingTool):
 
 class Trivy(HackingTool):
     TITLE = "Trivy (Container/K8s Scanner)"
-    DESCRIPTION = "Comprehensive vulnerability scanner for containers, Kubernetes, IaC, and code."
+    DESCRIPTION = "全面的容器、Kubernetes、IaC 和代码漏洞扫描器。"
     INSTALL_COMMANDS = [
         "curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sudo sh -s -- -b /usr/local/bin",
     ]
@@ -41,8 +42,8 @@ class Trivy(HackingTool):
 
 
 class CloudSecurityTools(HackingToolsCollection):
-    TITLE = "Cloud Security Tools"
-    DESCRIPTION = "Tools for cloud infrastructure security assessment and exploitation."
+    TITLE = t("category.cloud")
+    DESCRIPTION = "用于云基础设施安全评估和利用的工具。"
     TOOLS = [
         Prowler(),
         ScoutSuite(),

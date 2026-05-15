@@ -1,4 +1,5 @@
 from core import HackingTool, HackingToolsCollection, console
+from i18n import t
 
 from rich.panel import Panel
 from rich.prompt import Prompt
@@ -6,7 +7,7 @@ from rich.prompt import Prompt
 
 class KnockMail(HackingTool):
     TITLE = "Knockmail"
-    DESCRIPTION = "KnockMail Tool Verify If Email Exists"
+    DESCRIPTION = "验证电子邮件是否存在的工具"
     INSTALL_COMMANDS = [
         "git clone https://github.com/heywoodlh/KnockMail.git",
         "cd KnockMail;sudo pip3 install -r requirements.txt"
@@ -16,7 +17,7 @@ class KnockMail(HackingTool):
 
 
 class EmailVerifyTools(HackingToolsCollection):
-    TITLE = "Email Verify tools"
+    TITLE = "邮箱验证工具"
     TOOLS = [KnockMail()]
 
 if __name__ == "__main__":

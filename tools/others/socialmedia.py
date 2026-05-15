@@ -3,15 +3,18 @@ import os
 import subprocess
 
 from core import HackingTool, HackingToolsCollection, console
+from i18n import t
 
 from rich.panel import Panel
 from rich.prompt import Prompt
 from rich import box
 
+from i18n import t
+
 
 class InstaBrute(HackingTool):
     TITLE = "Instagram Attack"
-    DESCRIPTION = "Brute force attack against Instagram"
+    DESCRIPTION = "针对 Instagram 的暴力破解攻击"
     PROJECT_URL = "https://github.com/chinoogawa/instaBrute"
     # Py3-7: Python 2 only (pip2.7); also violates Instagram ToS
     ARCHIVED = True
@@ -25,7 +28,7 @@ class InstaBrute(HackingTool):
 
 class BruteForce(HackingTool):
     TITLE = "AllinOne SocialMedia Attack"
-    DESCRIPTION = "Brute_Force_Attack Gmail Hotmail Twitter Facebook Netflix \n" \
+    DESCRIPTION = "暴力破解 Gmail、Hotmail、Twitter、Facebook、Netflix 等账户。\n" \
                   "[!] python3 Brute_Force.py -g <Account@gmail.com> -l <File_list>"
     INSTALL_COMMANDS = [
         "git clone https://github.com/Matrix07ksa/Brute_Force.git",
@@ -37,7 +40,7 @@ class BruteForce(HackingTool):
 
 class Faceshell(HackingTool):
     TITLE = "Facebook Attack"
-    DESCRIPTION = "Facebook BruteForcer"
+    DESCRIPTION = "Facebook 暴力破解工具"
     INSTALL_COMMANDS = [
         "git clone https://github.com/Matrix07ksa/Brute_Force.git",
         "cd Brute_Force;sudo pip3 install proxylist;pip3 install mechanize"
@@ -46,8 +49,8 @@ class Faceshell(HackingTool):
 
     def run(self):
         from config import get_tools_dir
-        name = Prompt.ask("Enter Username")
-        wordlist = Prompt.ask("Enter Wordlist path")
+        name = Prompt.ask(t("prompt.enter_username"))
+        wordlist = Prompt.ask(t("prompt.enter_wordlist"))
         # Bug 3 fix: os.chdir() replaced with cwd= parameter
         subprocess.run(
             ["python3", "Brute_Force.py", "-f", name, "-l", wordlist],
@@ -57,7 +60,7 @@ class Faceshell(HackingTool):
 
 class AppCheck(HackingTool):
     TITLE = "Application Checker"
-    DESCRIPTION = "Tool to check if an app is installed on the target device through a link."
+    DESCRIPTION = "通过链接检查目标设备上是否安装了应用程序的工具。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/jakuta-tech/underhanded.git",
         "cd underhanded && sudo chmod +x underhanded.sh"
@@ -67,7 +70,7 @@ class AppCheck(HackingTool):
 
 
 class SocialMediaBruteforceTools(HackingToolsCollection):
-    TITLE = "SocialMedia Bruteforce"
+    TITLE = "社交媒体暴力破解"
     TOOLS = [
         InstaBrute(),
         BruteForce(),

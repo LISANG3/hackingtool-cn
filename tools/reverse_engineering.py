@@ -4,12 +4,12 @@ from core import HackingTool, HackingToolsCollection, console
 
 from rich.panel import Panel
 from rich.prompt import Prompt
+from i18n import t
 
 
 class AndroGuard(HackingTool):
     TITLE = "Androguard"
-    DESCRIPTION = "Androguard is a Reverse engineering, Malware and goodware " \
-                  "analysis of Android applications and more"
+    DESCRIPTION = "Androguard 是一款针对 Android 应用的反向工程、恶意软件和良性软件分析工具。"
     INSTALL_COMMANDS = ["sudo pip3 install -U androguard"]
     PROJECT_URL = "https://github.com/androguard/androguard "
 
@@ -20,7 +20,7 @@ class AndroGuard(HackingTool):
 class Apk2Gold(HackingTool):
     TITLE = "Apk2Gold"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Apk2Gold is a CLI tool for decompiling Android apps to Java"
+    DESCRIPTION = "Apk2Gold 是一款用于将 Android 应用反编译为 Java 的 CLI 工具。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/lxdvs/apk2gold.git",
         "cd apk2gold;sudo bash make.sh"
@@ -28,17 +28,15 @@ class Apk2Gold(HackingTool):
     PROJECT_URL = "https://github.com/lxdvs/apk2gold "
 
     def run(self):
-        uinput = input("Enter (.apk) File >> ")
+        uinput = input(t("prompt.enter_apk_file"))
         subprocess.run(["sudo", "apk2gold", uinput])
 
 
 class Jadx(HackingTool):
     TITLE = "JadX"
-    DESCRIPTION = "Jadx is Dex to Java decompiler.\n" \
-                  "[*] decompile Dalvik bytecode to java classes from APK, dex," \
-                  " aar and zip files\n" \
-                  "[*] decode AndroidManifest.xml and other resources from " \
-                  "resources.arsc"
+    DESCRIPTION = "Jadx 是 Dex 到 Java 的反编译器。\n" \
+                  "[*] 将 Dalvik 字节码反编译为来自 APK、dex、aar 和 zip 文件的 Java 类\n" \
+                  "[*] 解码 AndroidManifest.xml 和来自 resources.arsc 的其他资源"
     INSTALL_COMMANDS = [
         "git clone https://github.com/skylot/jadx.git",
         # Bug 30 fix: gradlew dist requires Java — check first
@@ -54,7 +52,7 @@ class Jadx(HackingTool):
 
 class Ghidra(HackingTool):
     TITLE = "Ghidra (NSA Reverse Engineering)"
-    DESCRIPTION = "NSA's software reverse engineering framework — disassembly, decompilation, scripting."
+    DESCRIPTION = "NSA 的软件逆向工程框架 — 反汇编、反编译、脚本化。"
     REQUIRES_JAVA = True
     INSTALL_COMMANDS = [
         "sudo apt-get install -y ghidra || echo 'Download from https://ghidra-sre.org/'",
@@ -66,7 +64,7 @@ class Ghidra(HackingTool):
 
 class Radare2(HackingTool):
     TITLE = "Radare2 (RE Framework)"
-    DESCRIPTION = "Portable UNIX-like reverse engineering framework and command-line toolset."
+    DESCRIPTION = "可移植的类 Unix 逆向工程框架和命令行工具集。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/radareorg/radare2.git",
         "cd radare2 && sys/install.sh",
@@ -77,7 +75,7 @@ class Radare2(HackingTool):
 
 
 class ReverseEngineeringTools(HackingToolsCollection):
-    TITLE = "Reverse engineering tools"
+    TITLE = t("category.reverse")
     TOOLS = [
         AndroGuard(),
         Apk2Gold(),

@@ -2,6 +2,7 @@ from core import HackingTool, HackingToolsCollection, console
 
 from rich.panel import Panel
 from rich.prompt import Prompt
+from i18n import t
 
 
 # Bug 17 fix: Stitch was defined in both payload_creator.py and remote_administration.py.
@@ -10,8 +11,7 @@ from rich.prompt import Prompt
 
 class Pyshell(HackingTool):
     TITLE = "Pyshell"
-    DESCRIPTION = "Pyshell is a Rat Tool that can be able to download & upload " \
-                  "files,\n Execute OS Command and more.."
+    DESCRIPTION = "Pyshell 是一款 RAT 工具，能够下载和上传文件、执行操作系统命令等。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/knassar702/Pyshell.git;"
         "pip install --user pyscreenshot python-nmap requests"
@@ -21,7 +21,7 @@ class Pyshell(HackingTool):
 
 
 class RemoteAdministrationTools(HackingToolsCollection):
-    TITLE = "Remote Administrator Tools (RAT)"
+    TITLE = t("category.rat")
     TOOLS = [
         Pyshell()
     ]

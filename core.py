@@ -19,6 +19,7 @@ from constants import (
     THEME_SUCCESS, THEME_ERROR, THEME_WARNING,
     THEME_DIM, THEME_ARCHIVED, THEME_URL,
 )
+from i18n import t
 
 # Enable rich tracebacks globally
 install()
@@ -58,22 +59,22 @@ def _show_inline_help():
     """Quick help available from any menu level."""
     console.print(Panel(
         Text.assemble(
-            ("  Navigation\n", "bold white"),
+            ("  " + t("help.navigation") + "\n", "bold white"),
             ("  ─────────────────────────────────\n", "dim"),
-            ("  1–N    ", "bold cyan"), ("select item\n", "white"),
-            ("  97     ", "bold cyan"), ("install all (in category)\n", "white"),
-            ("\n  Tool menu: Install, Run, Update, Open Folder\n", "dim"),
-            ("  99     ", "bold cyan"), ("go back\n", "white"),
-            ("  98     ", "bold cyan"), ("open project page / archived\n", "white"),
-            ("  ?      ", "bold cyan"), ("show this help\n", "white"),
-            ("  q      ", "bold cyan"), ("quit hackingtool\n", "white"),
+            ("  1–N    ", "bold cyan"), (t("help.select_item") + "\n", "white"),
+            ("  97     ", "bold cyan"), (t("help.install_all_category") + "\n", "white"),
+            ("\n  " + t("help.tool_menu") + "\n", "dim"),
+            ("  99     ", "bold cyan"), (t("help.go_back") + "\n", "white"),
+            ("  98     ", "bold cyan"), (t("help.open_project_archived") + "\n", "white"),
+            ("  ?      ", "bold cyan"), (t("help.show_help") + "\n", "white"),
+            ("  q      ", "bold cyan"), (t("help.quit") + "\n", "white"),
         ),
-        title="[bold magenta] ? Quick Help [/bold magenta]",
+        title="[bold magenta] " + t("help.title") + " [/bold magenta]",
         border_style="magenta",
         box=box.ROUNDED,
         padding=(0, 2),
     ))
-    Prompt.ask("[dim]Press Enter to return[/dim]", default="")
+    Prompt.ask("[dim]" + t("help.press_enter") + "[/dim]", default="")
 
 
 class HackingTool:
@@ -107,11 +108,11 @@ class HackingTool:
             raise TypeError("options must be a list of (option_name, option_fn) tuples")
         self.OPTIONS = []
         if installable:
-            self.OPTIONS.append(("Install", self.install))
+            self.OPTIONS.append((t("tool.install"), self.install))
         if runnable:
-            self.OPTIONS.append(("Run", self.run))
-        self.OPTIONS.append(("Update", self.update))
-        self.OPTIONS.append(("Open Folder", self.open_folder))
+            self.OPTIONS.append((t("tool.run"), self.run))
+        self.OPTIONS.append((t("tool.update"), self.update))
+        self.OPTIONS.append((t("tool.open_folder"), self.open_folder))
         self.OPTIONS.extend(options)
 
     @property
@@ -159,21 +160,21 @@ class HackingTool:
             clear_screen()
             self.show_info()
 
-            table = Table(title="Options", box=box.SIMPLE_HEAVY)
-            table.add_column("No.", style="bold cyan", justify="center")
-            table.add_column("Action", style="bold yellow")
+            table = Table(title=t("menu.options"), box=box.SIMPLE_HEAVY)
+            table.add_column(t("menu.no"), style="bold cyan", justify="center")
+            table.add_column(t("menu.action"), style="bold yellow")
 
             for index, option in enumerate(self.OPTIONS):
                 table.add_row(str(index + 1), option[0])
 
             if self.PROJECT_URL:
-                table.add_row("98", "Open Project Page")
-            table.add_row("99", f"Back to {parent.TITLE if parent else 'Main Menu'}")
+                table.add_row("98", t("tool.open_project_page"))
+            table.add_row("99", t("menu.back_to", parent=parent.TITLE if parent else t("menu.main_menu")))
             console.print(table)
             console.print(
-                "  [dim cyan]?[/dim cyan][dim]help  "
-                "[/dim][dim cyan]q[/dim cyan][dim]uit  "
-                "[/dim][dim cyan]99[/dim cyan][dim] back[/dim]"
+                "  [dim cyan]?[/dim cyan][dim]" + t("help.help_short") + "  "
+                "[/dim][dim cyan]q[/dim cyan][dim]" + t("help.quit_short") + "  "
+                "[/dim][dim cyan]99[/dim cyan][dim] " + t("help.back_short") + "[/dim]"
             )
 
             raw = Prompt.ask("[bold cyan]╰─>[/bold cyan]", default="").strip().lower()
@@ -188,8 +189,8 @@ class HackingTool:
             try:
                 choice = int(raw)
             except ValueError:
-                console.print("[error]⚠ Enter a number, ? for help, or q to quit.[/error]")
-                Prompt.ask("[dim]Press Enter to continue[/dim]", default="")
+                console.print(f"[error]⚠ {t('error.enter_number')}[/error]")
+                Prompt.ask(f"[dim]{t('help.press_enter_continue')}[/dim]", default="")
                 continue
 
             if choice == 99:
@@ -201,9 +202,9 @@ class HackingTool:
                     self.OPTIONS[choice - 1][1]()
                 except Exception:
                     console.print_exception(show_locals=True)
-                Prompt.ask("[dim]Press Enter to continue[/dim]", default="")
+                Prompt.ask(f"[dim]{t('help.press_enter_continue')}[/dim]", default="")
             else:
-                console.print("[error]⚠ Invalid option.[/error]")
+                console.print(f"[error]⚠ {t('error.invalid_option')}[/error]")
 
     def before_install(self): pass
 
@@ -216,7 +217,7 @@ class HackingTool:
         self.after_install()
 
     def after_install(self):
-        console.print("[success]✔ Successfully installed![/success]")
+        console.print(f"[success]✔ {t('tool.installed')}[/success]")
 
     def before_uninstall(self) -> bool:
         return True
@@ -234,7 +235,7 @@ class HackingTool:
     def update(self):
         """Smart update — detects install method and runs the right update command."""
         if not self.is_installed:
-            console.print("[warning]Tool is not installed yet. Install it first.[/warning]")
+            console.print(f"[warning]{t('tool.not_installed')}[/warning]")
             return
 
         updated = False
@@ -267,9 +268,9 @@ class HackingTool:
                 updated = True
 
         if updated:
-            console.print("[success]✔ Update complete![/success]")
+            console.print(f"[success]✔ {t('tool.update_complete')}[/success]")
         else:
-            console.print("[dim]No automatic update method available for this tool.[/dim]")
+            console.print(f"[dim]{t('tool.no_auto_update')}[/dim]")
 
     def _get_tool_dir(self) -> str | None:
         """Find the tool's local directory — clone target, pip location, or binary path."""
@@ -311,13 +312,13 @@ class HackingTool:
         """Open the tool's directory in a new shell so the user can work manually."""
         tool_dir = self._get_tool_dir()
         if tool_dir:
-            console.print(f"[success]Opening folder: {tool_dir}[/success]")
-            console.print("[dim]Type 'exit' to return to hackingtool.[/dim]")
+            console.print(f"[success]{t('tool.opening_folder', dir=tool_dir)}[/success]")
+            console.print(f"[dim]{t('tool.type_exit')}[/dim]")
             os.system(f'cd "{tool_dir}" && $SHELL')
         else:
-            console.print("[warning]Tool directory not found.[/warning]")
+            console.print(f"[warning]{t('tool.dir_not_found')}[/warning]")
             if self.PROJECT_URL:
-                console.print(f"[dim]You can clone it manually:[/dim]")
+                console.print(f"[dim]{t('tool.clone_manually')}[/dim]")
                 console.print(f"[cyan]  git clone {self.PROJECT_URL}.git[/cyan]")
 
     def before_run(self): pass
@@ -326,14 +327,14 @@ class HackingTool:
         self.before_run()
         if isinstance(self.RUN_COMMANDS, (list, tuple)):
             for cmd in self.RUN_COMMANDS:
-                console.print(f"[cyan]⚙ Running:[/cyan] [bold]{cmd}[/bold]")
+                console.print(f"[cyan]⚙ {t('tool.running', cmd=cmd)}[/cyan]")
                 os.system(cmd)
         self.after_run()
 
     def after_run(self): pass
 
     def show_project_page(self):
-        console.print(f"[url]🌐 Opening: {self.PROJECT_URL}[/url]")
+        console.print(f"[url]🌐 {t('tool.opening_url', url=self.PROJECT_URL)}[/url]")
         webbrowser.open_new_tab(self.PROJECT_URL)
 
 
@@ -374,27 +375,27 @@ class HackingToolsCollection:
         """Show archived tools sub-menu (option 98)."""
         archived = self._archived_tools()
         if not archived:
-            console.print("[dim]No archived tools in this category.[/dim]")
-            Prompt.ask("[dim]Press Enter to return[/dim]", default="")
+            console.print(f"[dim]{t('menu.no_archived')}[/dim]")
+            Prompt.ask(f"[dim]{t('help.press_enter')}[/dim]", default="")
             return
 
         while True:
             clear_screen()
-            console.rule(f"[archived]Archived Tools — {self.TITLE}[/archived]", style="yellow")
+            console.rule(f"[archived]{t('menu.archived_tools', n='')} — {self.TITLE}[/archived]", style="yellow")
 
             table = Table(box=box.MINIMAL_DOUBLE_HEAD, show_lines=True)
-            table.add_column("No.", justify="center", style="bold yellow")
-            table.add_column("Tool", style="dim yellow")
-            table.add_column("Reason", style="dim white")
+            table.add_column(t("menu.no"), justify="center", style="bold yellow")
+            table.add_column(t("menu.tool"), style="dim yellow")
+            table.add_column(t("menu.reason"), style="dim white")
 
             for i, tool in enumerate(archived):
                 reason = getattr(tool, "ARCHIVED_REASON", "No reason given")
                 table.add_row(str(i + 1), tool.TITLE, reason)
 
-            table.add_row("99", "Back", "")
+            table.add_row("99", t("prompt.back"), "")
             console.print(table)
 
-            raw = Prompt.ask("[bold yellow][?] Select[/bold yellow]", default="99")
+            raw = Prompt.ask(f"[bold yellow][?] {t('prompt.select_option')}[/bold yellow]", default="99")
             try:
                 choice = int(raw)
             except ValueError:
@@ -415,11 +416,11 @@ class HackingToolsCollection:
             incompatible = self._incompatible_tools()
             archived = self._archived_tools()
 
-            table = Table(title="Available Tools", box=box.SIMPLE_HEAD, show_lines=True)
-            table.add_column("No.", justify="center", style="bold cyan", width=6)
+            table = Table(title=t("menu.available_tools"), box=box.SIMPLE_HEAD, show_lines=True)
+            table.add_column(t("menu.no"), justify="center", style="bold cyan", width=6)
             table.add_column("", width=2)  # installed indicator
-            table.add_column("Tool", style="bold yellow", min_width=24)
-            table.add_column("Description", style="white", overflow="fold")
+            table.add_column(t("menu.tool"), style="bold yellow", min_width=24)
+            table.add_column(t("menu.description"), style="white", overflow="fold")
 
             for index, tool in enumerate(active, start=1):
                 desc = getattr(tool, "DESCRIPTION", "") or "—"
@@ -433,19 +434,19 @@ class HackingToolsCollection:
             if not_installed:
                 table.add_row(
                     "[bold green]97[/bold green]", "",
-                    f"[bold green]Install all ({len(not_installed)} not installed)[/bold green]", "",
+                    f"[bold green]{t('menu.install_all', n=len(not_installed))}[/bold green]", "",
                 )
             if archived:
-                table.add_row("[dim]98[/dim]", "", f"[archived]Archived tools ({len(archived)})[/archived]", "")
+                table.add_row("[dim]98[/dim]", "", f"[archived]{t('menu.archived_tools', n=len(archived))}[/archived]", "")
             if incompatible:
-                console.print(f"[dim]({len(incompatible)} tools hidden — not supported on current OS)[/dim]")
+                console.print(f"[dim]{t('menu.tools_hidden', n=len(incompatible))}[/dim]")
 
-            table.add_row("99", "", f"Back to {parent.TITLE if parent else 'Main Menu'}", "")
+            table.add_row("99", "", t("menu.back_to", parent=parent.TITLE if parent else t("menu.main_menu")), "")
             console.print(table)
             console.print(
-                "  [dim cyan]?[/dim cyan][dim]help  "
-                "[/dim][dim cyan]q[/dim cyan][dim]uit  "
-                "[/dim][dim cyan]99[/dim cyan][dim] back[/dim]"
+                "  [dim cyan]?[/dim cyan][dim]" + t("help.help_short") + "  "
+                "[/dim][dim cyan]q[/dim cyan][dim]" + t("help.quit_short") + "  "
+                "[/dim][dim cyan]99[/dim cyan][dim] " + t("help.back_short") + "[/dim]"
             )
 
             raw = Prompt.ask("[bold cyan]╰─>[/bold cyan]", default="").strip().lower()
@@ -460,23 +461,23 @@ class HackingToolsCollection:
             try:
                 choice = int(raw)
             except ValueError:
-                console.print("[error]⚠ Enter a number, ? for help, or q to quit.[/error]")
+                console.print(f"[error]⚠ {t('error.enter_number')}[/error]")
                 continue
 
             if choice == 99:
                 return
             elif choice == 97 and not_installed:
                 console.print(Panel(
-                    f"[bold]Installing {len(not_installed)} tools...[/bold]",
+                    f"[bold]{t('tool.installing_n', n=len(not_installed))}[/bold]",
                     border_style="green", box=box.ROUNDED,
                 ))
                 for i, tool in enumerate(not_installed, start=1):
-                    console.print(f"\n[bold cyan]({i}/{len(not_installed)})[/bold cyan] {tool.TITLE}")
+                    console.print(f"\n[bold cyan]{t('tool.progress', i=i, total=len(not_installed))}[/bold cyan] {tool.TITLE}")
                     try:
                         tool.install()
                     except Exception:
-                        console.print(f"[error]✘ Failed: {tool.TITLE}[/error]")
-                Prompt.ask("\n[dim]Press Enter to continue[/dim]", default="")
+                        console.print(f"[error]✘ {t('tool.failed', title=tool.TITLE)}[/error]")
+                Prompt.ask(f"\n[dim]{t('help.press_enter_continue')}[/dim]", default="")
             elif choice == 98 and archived:
                 self._show_archived_tools()
             elif 1 <= choice <= len(active):
@@ -484,6 +485,6 @@ class HackingToolsCollection:
                     active[choice - 1].show_options(parent=self)
                 except Exception:
                     console.print_exception(show_locals=True)
-                    Prompt.ask("[dim]Press Enter to continue[/dim]", default="")
+                    Prompt.ask(f"[dim]{t('help.press_enter_continue')}[/dim]", default="")
             else:
-                console.print("[error]⚠ Invalid option.[/error]")
+                console.print(f"[error]⚠ {t('error.invalid_option')}[/error]")

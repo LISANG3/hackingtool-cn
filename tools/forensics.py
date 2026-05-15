@@ -6,13 +6,15 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.prompt import Prompt
 
+from i18n import t
+
 
 class Autopsy(HackingTool):
     TITLE = "Autopsy"
-    DESCRIPTION = "Autopsy is a platform that is used by Cyber Investigators.\n" \
-                  "[!] Works in any OS\n" \
-                  "[!] Recover Deleted Files from any OS & Media \n" \
-                  "[!] Extract Image Metadata"
+    DESCRIPTION = "Autopsy 是网络调查员使用的平台。\n" \
+                  "[+] 支持所有操作系统\n" \
+                  "[+] 从任何 OS 和介质恢复已删除文件\n" \
+                  "[+] 提取图像元数据"
     RUN_COMMANDS = ["sudo autopsy"]
 
     def __init__(self):
@@ -21,9 +23,9 @@ class Autopsy(HackingTool):
 
 class Wireshark(HackingTool):
     TITLE = "Wireshark"
-    DESCRIPTION = "Wireshark is a network capture and analyzer \n" \
-                  "tool to see what’s happening in your network.\n " \
-                  "And also investigate Network related incident"
+    DESCRIPTION = "Wireshark 是一个网络抓包和分析工具，\n" \
+                  "用于查看网络中发生的情况，\n" \
+                  "也可调查网络相关事件"
     RUN_COMMANDS = ["sudo wireshark"]
 
     def __init__(self):
@@ -32,7 +34,7 @@ class Wireshark(HackingTool):
 
 class BulkExtractor(HackingTool):
     TITLE = "Bulk extractor"
-    DESCRIPTION = "Extract useful information without parsing the file system"
+    DESCRIPTION = "无需解析文件系统即可提取有用信息"
     PROJECT_URL = "https://github.com/simsong/bulk_extractor"
     SUPPORTED_OS = ["linux"]
 
@@ -46,16 +48,16 @@ class BulkExtractor(HackingTool):
         import subprocess
         from config import get_tools_dir
         console.print(Panel(Text(self.TITLE, justify="center"), style="bold magenta"))
-        console.print("[bold magenta]Cloning repository and attempting to run GUI...[/]")
+        console.print("[bold magenta]正在克隆仓库并尝试运行 GUI...[/]")
         tools_dir = get_tools_dir()
         subprocess.run(["git", "clone", "https://github.com/simsong/bulk_extractor.git"],
                        cwd=str(tools_dir))
         be_dir = tools_dir / "bulk_extractor"
         subprocess.run(["./BEViewer"], cwd=str(be_dir / "java_gui"))
         console.print(
-            "[magenta]If you get an error after clone go to /java_gui/src/ and compile the .jar file && run ./BEViewer[/]")
+            "[magenta]如果克隆后出现错误，请前往 /java_gui/src/ 目录编译 .jar 文件并运行 ./BEViewer[/]")
         console.print(
-            "[magenta]Please visit for more details about installation: https://github.com/simsong/bulk_extractor[/]")
+            "[magenta]更多安装详情请访问: https://github.com/simsong/bulk_extractor[/]")
 
     def cli_mode(self):
         import subprocess
@@ -67,7 +69,7 @@ class BulkExtractor(HackingTool):
 
 class Guymager(HackingTool):
     TITLE = "Disk Clone and ISO Image Acquire"
-    DESCRIPTION = "Guymager is a free forensic imager for media acquisition."
+    DESCRIPTION = "Guymager 是一个用于介质采集的免费取证镜像工具。"
     SUPPORTED_OS = ["linux"]
     INSTALL_COMMANDS = ["sudo apt install guymager"]
     RUN_COMMANDS = ["sudo guymager"]
@@ -77,14 +79,14 @@ class Guymager(HackingTool):
 
 class Toolsley(HackingTool):
     TITLE = "Toolsley"
-    DESCRIPTION = "Toolsley got more than ten useful tools for investigation.\n" \
-                  "[+]File signature verifier\n" \
-                  "[+]File identifier \n" \
-                  "[+]Hash & Validate \n" \
-                  "[+]Binary inspector \n " \
-                  "[+]Encode text \n" \
-                  "[+]Data URI generator \n" \
-                  "[+]Password generator"
+    DESCRIPTION = "Toolsley 拥有十多种实用的调查工具。\n" \
+                  "[+] 文件签名验证器\n" \
+                  "[+] 文件标识符\n" \
+                  "[+] 哈希与验证\n" \
+                  "[+] 二进制检查器\n" \
+                  "[+] 文本编码\n" \
+                  "[+] Data URI 生成器\n" \
+                  "[+] 密码生成器"
     PROJECT_URL = "https://www.toolsley.com/"
 
     def __init__(self):
@@ -94,8 +96,8 @@ class Toolsley(HackingTool):
 class Volatility3(HackingTool):
     TITLE = "Volatility 3 (Memory Forensics)"
     DESCRIPTION = (
-        "The world's most widely used memory forensics framework.\n"
-        "Usage: python3 vol.py -f memory.dmp windows.pslist"
+        "全球最广泛使用的内存取证框架。\n"
+        "用法: python3 vol.py -f memory.dmp windows.pslist"
     )
     INSTALL_COMMANDS = [
         "git clone https://github.com/volatilityfoundation/volatility3.git",
@@ -107,8 +109,8 @@ class Volatility3(HackingTool):
         from config import get_tools_dir
         import subprocess
         from rich.prompt import Prompt
-        dump = Prompt.ask("Enter path to memory dump")
-        plugin = Prompt.ask("Enter plugin", default="windows.pslist")
+        dump = Prompt.ask(t("prompt.enter_memory_dump"))
+        plugin = Prompt.ask(t("prompt.enter_plugin"), default="windows.pslist")
         subprocess.run(
             ["python3", "vol.py", "-f", dump, plugin],
             cwd=str(get_tools_dir() / "volatility3"),
@@ -118,8 +120,8 @@ class Volatility3(HackingTool):
 class Binwalk(HackingTool):
     TITLE = "Binwalk (Firmware Analysis)"
     DESCRIPTION = (
-        "Analyze, reverse engineer, and extract firmware images.\n"
-        "Usage: binwalk -e firmware.bin"
+        "分析、逆向工程和提取固件镜像。\n"
+        "用法: binwalk -e firmware.bin"
     )
     INSTALL_COMMANDS = ["pip install --user binwalk"]
     RUN_COMMANDS = ["binwalk --help"]
@@ -128,7 +130,7 @@ class Binwalk(HackingTool):
 
 class Pspy(HackingTool):
     TITLE = "pspy (Process Monitor — No Root)"
-    DESCRIPTION = "Monitor Linux processes without root — detects cron jobs, scheduled tasks, other users' commands."
+    DESCRIPTION = "无需 root 权限即可监控 Linux 进程 — 检测 cron 任务、计划任务及其他用户命令。"
     INSTALL_COMMANDS = [
         "curl -sSL https://github.com/DominicBreuker/pspy/releases/latest/download/pspy64 -o pspy",
         "chmod +x pspy",
@@ -139,7 +141,7 @@ class Pspy(HackingTool):
 
 
 class ForensicTools(HackingToolsCollection):
-    TITLE = "Forensic tools"
+    TITLE = t("category.forensics")
     TOOLS = [
         Autopsy(),
         Wireshark(),

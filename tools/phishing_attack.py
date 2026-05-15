@@ -1,12 +1,13 @@
 import os
 
 from core import HackingTool, HackingToolsCollection, console
+from i18n import t
 
 
 class Autophisher(HackingTool):
     TITLE = "Autophisher RK"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Automated Phishing Toolkit"
+    DESCRIPTION = "自动化钓鱼工具包"
     INSTALL_COMMANDS = [
         "git clone https://github.com/CodingRanjith/autophisher.git",
     ]
@@ -16,7 +17,7 @@ class Autophisher(HackingTool):
 
 class Pyphisher(HackingTool):
     TITLE = "Pyphisher"
-    DESCRIPTION = "Easy to use phishing tool with 77 website templates"
+    DESCRIPTION = "易于使用的钓鱼工具，包含 77 个网站模板"
     # Bug 9 fix: pip must reference the full path, not rely on a no-op "cd" call
     INSTALL_COMMANDS = [
         "git clone https://github.com/KasRoudra/PyPhisher",
@@ -30,7 +31,7 @@ class Pyphisher(HackingTool):
 class AdvPhishing(HackingTool):
     TITLE = "AdvPhishing"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "This is Advance Phishing Tool ! OTP PHISHING"
+    DESCRIPTION = "这是一款高级钓鱼工具！OTP 钓鱼"
     INSTALL_COMMANDS = [
         "git clone https://github.com/Ignitetch/AdvPhishing.git",
         # Vuln 2 fix: chmod 777 → chmod +x
@@ -44,8 +45,8 @@ class Setoolkit(HackingTool):
     TITLE = "Setoolkit"
     SUPPORTED_OS = ["linux"]
     DESCRIPTION = (
-        "The Social-Engineer Toolkit is an open-source penetration\n"
-        "testing framework designed for social engineering."
+        "Social-Engineer Toolkit 是一款开源的渗透\n"
+        "测试框架，专为社会工程学设计。"
     )
     INSTALL_COMMANDS = [
         "git clone https://github.com/trustedsec/social-engineer-toolkit/",
@@ -58,7 +59,7 @@ class Setoolkit(HackingTool):
 class SocialFish(HackingTool):
     TITLE = "SocialFish"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Automated Phishing Tool & Information Collector NOTE: username is 'root' and password is 'pass'"
+    DESCRIPTION = "自动化钓鱼工具和信息收集器 注意: 用户名为 'root'，密码为 'pass'"
     INSTALL_COMMANDS = [
         "git clone https://github.com/UndeadSec/SocialFish.git && sudo apt-get install python3 python3-pip python3-dev -y",
         "cd SocialFish && sudo python3 -m pip install -r requirements.txt",
@@ -71,7 +72,7 @@ class HiddenEye(HackingTool):
     TITLE = "HiddenEye"
     SUPPORTED_OS = ["linux"]
     DESCRIPTION = (
-        "Modern Phishing Tool With Advanced Functionality And Multiple Tunnelling Services\n"
+        "具有高级功能和多种隧道服务的现代钓鱼工具\n"
         "\t[!] https://github.com/DarkSecDevelopers/HiddenEye"
     )
     INSTALL_COMMANDS = [
@@ -87,9 +88,9 @@ class Evilginx3(HackingTool):
     TITLE = "Evilginx3"
     SUPPORTED_OS = ["linux"]
     DESCRIPTION = (
-        "evilginx is a man-in-the-middle attack framework used for phishing login credentials\n"
-        "along with session cookies, bypassing 2-factor authentication.\n"
-        "Requires Go >= 1.18 installed."
+        "evilginx 是一个中间人攻击框架，用于窃取登录凭据\n"
+        "以及会话 Cookie，绕过双重身份验证。\n"
+        "需要安装 Go >= 1.18。"
     )
     # Bug 6 fix: removed 'sudo evilginx' (interactive) from INSTALL_COMMANDS
     INSTALL_COMMANDS = [
@@ -105,8 +106,8 @@ class ISeeYou(HackingTool):
     TITLE = "I-See_You"
     SUPPORTED_OS = ["linux"]
     DESCRIPTION = (
-        "[!] ISeeYou finds the exact location of a target via social engineering.\n"
-        "[!] Expose local servers to the internet and decode location from log file."
+        "[!] ISeeYou 通过社会工程学查找目标的精确位置。\n"
+        "[!] 将本地服务器暴露到互联网，并从日志文件中解码位置信息。"
     )
     INSTALL_COMMANDS = [
         "git clone https://github.com/Viralmaniar/I-See-You.git",
@@ -119,7 +120,7 @@ class ISeeYou(HackingTool):
 class SayCheese(HackingTool):
     TITLE = "SayCheese"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Take webcam shots from target just by sending a malicious link"
+    DESCRIPTION = "只需发送恶意链接即可从目标获取摄像头照片"
     INSTALL_COMMANDS = ["git clone https://github.com/hangetzzu/saycheese"]
     RUN_COMMANDS = ["cd saycheese && sudo bash saycheese.sh"]
     PROJECT_URL = "https://github.com/hangetzzu/saycheese"
@@ -128,7 +129,7 @@ class SayCheese(HackingTool):
 class QRJacking(HackingTool):
     TITLE = "QR Code Jacking"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "QR Code Jacking (Any Website)"
+    DESCRIPTION = "QR 码劫持 (任何网站)"
     INSTALL_COMMANDS = [
         "git clone https://github.com/cryptedwolf/ohmyqr.git && sudo apt -y install scrot",
     ]
@@ -142,7 +143,7 @@ class QRJacking(HackingTool):
 class BlackEye(HackingTool):
     TITLE = "BlackEye"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "The ultimate phishing tool with 38 websites available!"
+    DESCRIPTION = "终极钓鱼工具，提供 38 个网站模板！"
     INSTALL_COMMANDS = [
         "git clone https://github.com/thelinuxchoice/blackeye",
     ]
@@ -153,7 +154,7 @@ class BlackEye(HackingTool):
 class ShellPhish(HackingTool):
     TITLE = "ShellPhish"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Phishing Tool for 18 social media"
+    DESCRIPTION = "适用于 18 种社交媒体的钓鱼工具"
     INSTALL_COMMANDS = ["git clone https://github.com/An0nUD4Y/shellphish.git"]
     RUN_COMMANDS = ["cd shellphish && sudo bash shellphish.sh"]
     PROJECT_URL = "https://github.com/An0nUD4Y/shellphish"
@@ -162,7 +163,7 @@ class ShellPhish(HackingTool):
 class Thanos(HackingTool):
     TITLE = "Thanos"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Browser to Browser Phishing toolkit"
+    DESCRIPTION = "浏览器到浏览器钓鱼工具包"
     INSTALL_COMMANDS = [
         "git clone https://github.com/TridevReddy/Thanos.git",
         # Vuln 2 fix: chmod -R 777 → chmod +x
@@ -174,7 +175,7 @@ class Thanos(HackingTool):
 
 class QRLJacking(HackingTool):
     TITLE = "QRLJacking"
-    DESCRIPTION = "QRLJacking — session hijacking attack vector targeting QR code based login"
+    DESCRIPTION = "QRLJacking — 针对基于 QR 码登录的会话劫持攻击向量"
     INSTALL_COMMANDS = [
         "git clone https://github.com/OWASP/QRLJacking.git",
         # Bug fix: geckodriver must be fetched as a binary, not cloned from source
@@ -190,7 +191,7 @@ class QRLJacking(HackingTool):
 class Maskphish(HackingTool):
     TITLE = "Maskphish"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Hide phishing URL under a normal looking URL (google.com or facebook.com)"
+    DESCRIPTION = "将钓鱼 URL 隐藏在正常 URL (google.com 或 facebook.com) 之下"
     INSTALL_COMMANDS = [
         "git clone https://github.com/jaykali/maskphish.git",
     ]
@@ -222,14 +223,14 @@ class Dnstwist(HackingTool):
     # Bug 2 fix: all attributes were wrong case (Title, Install_commands, etc.)
     # They are now the correct uppercase names the base class reads.
     TITLE = "dnstwist"
-    DESCRIPTION = "Domain name permutation engine for detecting typosquatting, phishing and brand impersonation"
+    DESCRIPTION = "域名排列引擎，用于检测域名抢注、钓鱼和品牌冒充"
     INSTALL_COMMANDS = ["pip3 install --user dnstwist"]
     RUN_COMMANDS = ["dnstwist --help"]
     PROJECT_URL = "https://github.com/elceef/dnstwist"
 
 
 class PhishingAttackTools(HackingToolsCollection):
-    TITLE = "Phishing attack tools"
+    TITLE = t("category.phishing")
     TOOLS = [
         Autophisher(),
         Pyphisher(),

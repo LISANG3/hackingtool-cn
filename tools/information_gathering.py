@@ -11,10 +11,11 @@ from rich.panel import Panel
 from rich.text import Text
 from rich.prompt import Prompt
 
+from i18n import t
 
 class NMAP(HackingTool):
     TITLE = "Network Map (nmap)"
-    DESCRIPTION = "Free and open source utility for network discovery and security auditing"
+    DESCRIPTION = "用于网络发现和安全审计的免费开源工具"
     INSTALL_COMMANDS = [
         "git clone https://github.com/nmap/nmap.git",
         "sudo chmod -R 755 nmap && cd nmap && sudo ./configure && make && sudo make install"
@@ -27,8 +28,7 @@ class NMAP(HackingTool):
 
 class Dracnmap(HackingTool):
     TITLE = "Dracnmap"
-    DESCRIPTION = "Dracnmap is an open source program which is using to \n" \
-                  "exploit the network and gathering information with nmap help."
+    DESCRIPTION = "Dracnmap 是一款开源程序，利用 nmap 进行网络漏洞利用和信息收集。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/Screetsec/Dracnmap.git",
         "cd Dracnmap && chmod +x dracnmap-v2.2-dracOs.sh  dracnmap-v2.2.sh"
@@ -46,7 +46,7 @@ class PortScan(HackingTool):
     def run(self):
         clear_screen()
         console.print(Panel(Text(self.TITLE, justify="center"), style="bold magenta"))
-        target = Prompt.ask("[bold]Select a Target IP[/bold magenta]", default="", show_default=False)
+        target = Prompt.ask(f"[bold]{t('prompt.select_target_ip')}[/bold magenta]", default="", show_default=False)
         subprocess.run(["sudo", "nmap", "-O", "-Pn", target])
 
 
@@ -59,15 +59,14 @@ class Host2IP(HackingTool):
     def run(self):
         clear_screen()
         console.print(Panel(Text(self.TITLE, justify="center"), style="bold magenta"))
-        host = Prompt.ask("Enter host name (e.g. www.google.com):-  ")
+        host = Prompt.ask(t("prompt.enter_host"))
         ips = socket.gethostbyname(host)
         console.print("[bold magenta]{host} -> {ips}[/bold magenta]")
 
 
 class XeroSploit(HackingTool):
     TITLE = "Xerosploit"
-    DESCRIPTION = "Xerosploit is a penetration testing toolkit whose goal is to perform\n" \
-                  "man-in-the-middle attacks for testing purposes"
+    DESCRIPTION = "Xerosploit 是一个渗透测试工具包，旨在进行中间人攻击测试。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/LionSec/xerosploit.git",
         "cd xerosploit && sudo python install.py"
@@ -78,7 +77,7 @@ class XeroSploit(HackingTool):
 
 class RedHawk(HackingTool):
     TITLE = "RED HAWK (All In One Scanning)"
-    DESCRIPTION = "All in one tool for Information Gathering and Vulnerability Scanning."
+    DESCRIPTION = "一体化的信息收集和漏洞扫描工具。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/Tuhinshubhra/RED_HAWK.git"]
     RUN_COMMANDS = ["cd RED_HAWK;php rhawk.php"]
@@ -87,10 +86,7 @@ class RedHawk(HackingTool):
 
 class ReconSpider(HackingTool):
     TITLE = "ReconSpider(For All Scanning)"
-    DESCRIPTION = "ReconSpider is most Advanced Open Source Intelligence (OSINT)" \
-                  " Framework for scanning IP Address, Emails, \n" \
-                  "Websites, Organizations and find out information from" \
-                  " different sources.\n"
+    DESCRIPTION = "ReconSpider 是最先进的开源情报（OSINT）框架，用于扫描 IP 地址、电子邮件、\n网站、组织，并从不同来源查找信息。\n"
     INSTALL_COMMANDS = [
         "git clone https://github.com/bhavsec/reconspider.git",
         "sudo apt install -y python3 python3-pip && cd reconspider && pip install --user ."
@@ -101,21 +97,20 @@ class ReconSpider(HackingTool):
 
 class IsItDown(HackingTool):
     TITLE = "IsItDown (Check Website Down/Up)"
-    DESCRIPTION = "Check Website Is Online or Not"
+    DESCRIPTION = "检查网站是否在线"
 
     def __init__(self):
         super().__init__(
             [('Open', self.open)], installable=False, runnable=False)
 
     def open(self):
-        console.print(Panel("Opening isitdownrightnow.com", style="bold magenta"))
+        console.print(Panel(t("tool.opening_site"), style="bold magenta"))
         webbrowser.open_new_tab("https://www.isitdownrightnow.com/")
 
 
 class Infoga(HackingTool):
     TITLE = "Infoga - Email OSINT"
-    DESCRIPTION = "Infoga is a tool gathering email accounts information\n" \
-                  "(ip, hostname, country,...) from different public source"
+    DESCRIPTION = "Infoga 是一款从不同公共来源收集电子邮件账户信息\n（IP、主机名、国家等）的工具"
     INSTALL_COMMANDS = [
         "git clone https://github.com/m4ll0k/Infoga.git",
         "cd Infoga && pip install --user ."
@@ -126,7 +121,7 @@ class Infoga(HackingTool):
 
 class ReconDog(HackingTool):
     TITLE = "ReconDog"
-    DESCRIPTION = "ReconDog Information Gathering Suite"
+    DESCRIPTION = "ReconDog 信息收集套件"
     INSTALL_COMMANDS = ["git clone https://github.com/s0md3v/ReconDog.git"]
     RUN_COMMANDS = ["cd ReconDog;sudo python dog"]
     PROJECT_URL = "https://github.com/s0md3v/ReconDog"
@@ -134,7 +129,7 @@ class ReconDog(HackingTool):
 
 class Striker(HackingTool):
     TITLE = "Striker"
-    DESCRIPTION = "Recon & Vulnerability Scanning Suite"
+    DESCRIPTION = "侦察与漏洞扫描套件"
     INSTALL_COMMANDS = [
         "git clone https://github.com/s0md3v/Striker.git",
         "cd Striker && pip3 install -r requirements.txt"
@@ -143,7 +138,7 @@ class Striker(HackingTool):
 
     def run(self):
         from config import get_tools_dir
-        site = Prompt.ask("Enter Site Name (example.com)")
+        site = Prompt.ask(t("prompt.enter_site"))
         # Bug 3 fix: os.chdir() corrupts the process CWD permanently — use cwd= instead
         subprocess.run(
             ["sudo", "python3", "striker.py", site],
@@ -153,10 +148,9 @@ class Striker(HackingTool):
 
 class SecretFinder(HackingTool):
     TITLE = "SecretFinder (like API & etc)"
-    DESCRIPTION = "SecretFinder - A python script for find sensitive data \n" \
-                  "like apikeys, accesstoken, authorizations, jwt,..etc \n " \
-                  "and search anything on javascript files.\n\n " \
-                  "Usage: python SecretFinder.py -h"
+    DESCRIPTION = "SecretFinder - 用于查找敏感数据（如 API 密钥、访问令牌、授权信息、\n" \
+                  "JWT 等）的 Python 脚本，并在 JavaScript 文件中搜索任何内容。\n\n" \
+                  "用法: python SecretFinder.py -h"
     INSTALL_COMMANDS = [
         "git clone https://github.com/m4ll0k/SecretFinder.git secretfinder",
         "cd secretfinder; sudo pip3 install -r requirements.txt"
@@ -169,9 +163,9 @@ class SecretFinder(HackingTool):
 
 class Shodan(HackingTool):
     TITLE = "Find Info Using Shodan"
-    DESCRIPTION = "Get ports, vulnerabilities, information, banners,..etc \n " \
-                  "for any IP with Shodan (no apikey! no rate limit!)\n" \
-                  "[X] Don't use this tool because your ip will be blocked by Shodan!"
+    DESCRIPTION = "通过 Shodan 获取任何 IP 的端口、漏洞、信息、横幅等\n" \
+                  "（无需 API 密钥！无速率限制！）\n" \
+                  "[X] 请勿使用此工具，否则您的 IP 将被 Shodan 封禁！"
     INSTALL_COMMANDS = ["git clone https://github.com/m4ll0k/Shodanfy.py.git"]
     PROJECT_URL = "https://github.com/m4ll0k/Shodanfy.py"
 
@@ -181,8 +175,7 @@ class Shodan(HackingTool):
 
 class PortScannerRanger(HackingTool):
     TITLE = "Port Scanner - rang3r"
-    DESCRIPTION = "rang3r is a python script which scans in multi thread\n " \
-                  "all alive hosts within your range that you specify."
+    DESCRIPTION = "rang3r 是一个 Python 脚本，可在多线程中扫描指定范围内的所有活跃主机。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/floriankunushevci/rang3r.git;"
         "pip install --user termcolor"]
@@ -190,7 +183,7 @@ class PortScannerRanger(HackingTool):
 
     def run(self):
         from config import get_tools_dir
-        ip = Prompt.ask("Enter IP")
+        ip = Prompt.ask(t("prompt.enter_ip"))
         # Bug 3 fix: os.chdir() replaced with cwd= parameter
         subprocess.run(
             ["sudo", "python3", "rang3r.py", "--ip", ip],
@@ -200,13 +193,13 @@ class PortScannerRanger(HackingTool):
 
 class Breacher(HackingTool):
     TITLE = "Breacher"
-    DESCRIPTION = "An advanced multithreaded admin panel finder written in python."
+    DESCRIPTION = "一个用 Python 编写的高级多线程后台管理面板查找工具。"
     INSTALL_COMMANDS = ["git clone https://github.com/s0md3v/Breacher.git"]
     PROJECT_URL = "https://github.com/s0md3v/Breacher"
 
     def run(self):
         from config import get_tools_dir
-        domain = Prompt.ask("Enter domain (example.com)")
+        domain = Prompt.ask(t("prompt.enter_domain"))
         # Bug 3 fix: os.chdir() replaced with cwd= parameter
         subprocess.run(
             ["python3", "breacher.py", "-u", domain],
@@ -217,8 +210,8 @@ class Breacher(HackingTool):
 class TheHarvester(HackingTool):
     TITLE = "theHarvester (OSINT)"
     DESCRIPTION = (
-        "Gather emails, names, subdomains, IPs and URLs from public sources.\n"
-        "Usage: theHarvester -d example.com -b all"
+        "从公共来源收集电子邮件、姓名、子域名、IP 和 URL。\n"
+        "用法: theHarvester -d example.com -b all"
     )
     INSTALL_COMMANDS = [
         "git clone https://github.com/laramies/theHarvester.git",
@@ -231,8 +224,8 @@ class TheHarvester(HackingTool):
 class Amass(HackingTool):
     TITLE = "Amass (Attack Surface Mapping)"
     DESCRIPTION = (
-        "In-depth subdomain enumeration and attack surface mapping.\n"
-        "Usage: amass enum -d example.com"
+        "深度子域名枚举和攻击面映射。\n"
+        "用法: amass enum -d example.com"
     )
     SUPPORTED_OS = ["linux"]
     REQUIRES_GO = True
@@ -246,8 +239,8 @@ class Amass(HackingTool):
 class Masscan(HackingTool):
     TITLE = "Masscan (Fast Port Scanner)"
     DESCRIPTION = (
-        "Fastest internet port scanner — 10 million packets/sec.\n"
-        "Usage: masscan -p1-65535 <IP> --rate=1000"
+        "最快的互联网端口扫描器 — 每秒 1000 万数据包。\n"
+        "用法: masscan -p1-65535 <IP> --rate=1000"
     )
     SUPPORTED_OS = ["linux"]
     INSTALL_COMMANDS = ["sudo apt-get install -y masscan"]
@@ -258,8 +251,8 @@ class Masscan(HackingTool):
 class RustScan(HackingTool):
     TITLE = "RustScan (Modern Port Scanner)"
     DESCRIPTION = (
-        "Scans all 65k ports in 3 seconds, passes results to nmap automatically.\n"
-        "Usage: rustscan -a <IP> -- -sV"
+        "3 秒内扫描全部 65k 端口，自动将结果传递给 nmap。\n"
+        "用法: rustscan -a <IP> -- -sV"
     )
     SUPPORTED_OS = ["linux"]
     INSTALL_COMMANDS = [
@@ -273,8 +266,8 @@ class RustScan(HackingTool):
 class Holehe(HackingTool):
     TITLE = "Holehe (Email → Social Accounts)"
     DESCRIPTION = (
-        "Check if an email address is registered on 120+ websites.\n"
-        "Usage: holehe user@example.com"
+        "检查电子邮件地址是否在 120+ 个网站上注册。\n"
+        "用法: holehe user@example.com"
     )
     INSTALL_COMMANDS = ["pip install --user holehe"]
     RUN_COMMANDS = ["holehe --help"]
@@ -284,8 +277,8 @@ class Holehe(HackingTool):
 class Maigret(HackingTool):
     TITLE = "Maigret (Username OSINT)"
     DESCRIPTION = (
-        "Collect a dossier on a person by username across 3000+ sites.\n"
-        "Usage: maigret <username>"
+        "通过用户名在 3000+ 个网站上收集个人信息档案。\n"
+        "用法: maigret <username>"
     )
     INSTALL_COMMANDS = ["pip install --user maigret"]
     RUN_COMMANDS = ["maigret --help"]
@@ -295,8 +288,8 @@ class Maigret(HackingTool):
 class Httpx(HackingTool):
     TITLE = "httpx (HTTP Toolkit)"
     DESCRIPTION = (
-        "Fast multi-purpose HTTP probing tool.\n"
-        "Usage: httpx -l urls.txt -status-code -title -tech-detect"
+        "快速多用途 HTTP 探测工具。\n"
+        "用法: httpx -l urls.txt -status-code -title -tech-detect"
     )
     REQUIRES_GO = True
     INSTALL_COMMANDS = [
@@ -308,7 +301,7 @@ class Httpx(HackingTool):
 
 class SpiderFoot(HackingTool):
     TITLE = "SpiderFoot (OSINT Automation)"
-    DESCRIPTION = "Automates OSINT collection for threat intelligence and attack surface mapping."
+    DESCRIPTION = "自动化 OSINT 收集，用于威胁情报和攻击面映射。"
     INSTALL_COMMANDS = ["pip install --user spiderfoot"]
     RUN_COMMANDS = ["spiderfoot -h"]
     PROJECT_URL = "https://github.com/smicallef/spiderfoot"
@@ -316,7 +309,7 @@ class SpiderFoot(HackingTool):
 
 class Subfinder(HackingTool):
     TITLE = "Subfinder (Subdomain Enumeration)"
-    DESCRIPTION = "Fast passive subdomain enumeration using multiple sources."
+    DESCRIPTION = "使用多个来源进行快速被动子域名枚举。"
     REQUIRES_GO = True
     INSTALL_COMMANDS = [
         "go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest",
@@ -327,7 +320,7 @@ class Subfinder(HackingTool):
 
 class TruffleHog(HackingTool):
     TITLE = "TruffleHog (Secret Scanner)"
-    DESCRIPTION = "Find, verify, and analyze leaked credentials across git repos, S3 buckets, filesystems."
+    DESCRIPTION = "在 git 仓库、S3 存储桶、文件系统中查找、验证和分析泄露的凭据。"
     INSTALL_COMMANDS = ["pip install --user trufflehog"]
     RUN_COMMANDS = ["trufflehog --help"]
     PROJECT_URL = "https://github.com/trufflesecurity/trufflehog"
@@ -335,7 +328,7 @@ class TruffleHog(HackingTool):
 
 class Gitleaks(HackingTool):
     TITLE = "Gitleaks (Git Secret Scanner)"
-    DESCRIPTION = "Fast secret scanner for git repos — detects hardcoded passwords, API keys, tokens."
+    DESCRIPTION = "用于 git 仓库的快速密钥扫描器 — 检测硬编码密码、API 密钥和令牌。"
     REQUIRES_GO = True
     INSTALL_COMMANDS = [
         "go install github.com/gitleaks/gitleaks/v8@latest",
@@ -345,7 +338,7 @@ class Gitleaks(HackingTool):
 
 
 class InformationGatheringTools(HackingToolsCollection):
-    TITLE = "Information gathering tools"
+    TITLE = t("category.info_gathering")
     TOOLS = [
         NMAP(),
         Dracnmap(),

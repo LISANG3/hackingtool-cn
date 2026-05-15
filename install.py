@@ -27,6 +27,7 @@ from constants import (
     USER_CONFIG_DIR, USER_TOOLS_DIR, USER_CONFIG_FILE,
     DEFAULT_CONFIG,
 )
+from i18n import t
 from os_detect import CURRENT_OS, REQUIRED_PACKAGES, PACKAGE_UPDATE_CMDS, PACKAGE_INSTALL_CMDS
 
 console = Console()
@@ -40,8 +41,7 @@ REQUIREMENTS   = "requirements.txt"
 def check_root():
     if os.geteuid() != 0:
         console.print(Panel(
-            "[error]This installer must be run as root.\n"
-            "Use: [bold]sudo python3 install.py[/bold][/error]",
+            f"[error]{t('install.root_required')}[/error]",
             border_style="red",
         ))
         sys.exit(1)
@@ -53,49 +53,46 @@ def check_os_compatibility():
     """Print detected OS info and exit on unsupported systems."""
     info = CURRENT_OS
     console.print(
-        f"[dim]Detected: OS={info.system} | distro={info.distro_id or 'n/a'} | "
-        f"pkg_mgr={info.pkg_manager or 'none'} | arch={info.arch}[/dim]"
+        f"[dim]{t('install.detected', os=info.system, distro=info.distro_id or 'n/a', mgr=info.pkg_manager or 'none', arch=info.arch)}[/dim]"
     )
 
     if info.system == "windows":
         console.print(Panel(
-            "[error]Windows is not supported natively.[/error]\n"
-            "Use WSL2 with a Kali or Ubuntu image.",
+            f"[error]{t('install.windows')}[/error]",
             border_style="red",
         ))
         sys.exit(1)
 
     if info.is_wsl:
-        console.print("[warning]WSL detected. Wireless tools will NOT work in WSL.[/warning]")
+        console.print(f"[warning]{t('install.wsl_warning')}[/warning]")
 
     if info.system == "macos":
         console.print(Panel(
-            "[warning]macOS support is partial.[/warning]\n"
-            "Network/wireless tools require Linux. OSINT and web tools work.",
+            f"[warning]{t('install.macos_partial')}[/warning]",
             border_style="yellow",
         ))
         if not shutil.which("brew"):
-            console.print("[error]Homebrew not found. Install it first: https://brew.sh[/error]")
+            console.print(f"[error]{t('install.no_brew')}[/error]")
             sys.exit(1)
 
     if not info.pkg_manager:
-        console.print("[warning]No supported package manager found.[/warning]")
-        console.print("[dim]Supported: apt-get, pacman, dnf, zypper, apk, brew[/dim]")
+        console.print(f"[warning]{t('install.no_pkg_mgr')}[/warning]")
+        console.print(f"[dim]{t('install.supported_mgrs')}[/dim]")
 
 
 # ── Internet check ─────────────────────────────────────────────────────────────
 
 def check_internet() -> bool:
-    console.print("[dim]Checking internet...[/dim]")
+    console.print(f"[dim]{t('install.checking_internet')}[/dim]")
     for host in ("https://github.com", "https://www.google.com"):
         r = subprocess.run(
             ["curl", "-sSf", "--max-time", "8", host],
             capture_output=True,
         )
         if r.returncode == 0:
-            console.print("[success]✔ Internet connection OK[/success]")
+            console.print(f"[success]✔ {t('install.internet_ok')}[/success]")
             return True
-    console.print("[error]✘ No internet connection[/error]")
+    console.print(f"[error]✘ {t('install.no_internet')}[/error]")
     return False
 
 
@@ -104,7 +101,7 @@ def check_internet() -> bool:
 def install_system_packages():
     mgr = CURRENT_OS.pkg_manager
     if not mgr:
-        console.print("[warning]Skipping system packages — no package manager found.[/warning]")
+        console.print(f"[warning]{t('install.skipping_pkgs')}[/warning]")
         return
 
     # Use sudo only when not already root (uid != 0).
@@ -115,7 +112,7 @@ def install_system_packages():
     if mgr != "brew":
         update_cmd = PACKAGE_UPDATE_CMDS.get(mgr, "")
         if update_cmd:
-            console.print(f"[dim]Updating package index ({mgr})...[/dim]")
+            console.print(f"[dim]{t('install.updating_index', mgr=mgr)}[/dim]")
             subprocess.run(f"{priv}{update_cmd}", shell=True, check=False)
 
     packages = REQUIRED_PACKAGES.get(mgr, [])
@@ -124,10 +121,10 @@ def install_system_packages():
 
     install_tpl = PACKAGE_INSTALL_CMDS[mgr]
     cmd = install_tpl.format(packages=" ".join(packages))
-    console.print(f"[dim]Installing system dependencies ({mgr})...[/dim]")
+    console.print(f"[dim]{t('install.installing_deps', mgr=mgr)}[/dim]")
     result = subprocess.run(f"{priv}{cmd}", shell=True, check=False)
     if result.returncode != 0:
-        console.print("[warning]Some packages failed — you may need to install them manually.[/warning]")
+        console.print(f"[warning]{t('install.some_failed')}[/warning]")
 
 
 # ── App directory ──────────────────────────────────────────────────────────────
@@ -139,9 +136,9 @@ def _is_source_dir() -> bool:
 
 def prepare_install_dir():
     if APP_INSTALL_DIR.exists():
-        console.print(f"[warning]{APP_INSTALL_DIR} already exists.[/warning]")
-        if not Confirm.ask("Replace it? This removes the existing installation.", default=False):
-            console.print("[error]Installation aborted.[/error]")
+        console.print(f"[warning]{t('install.exists', dir=APP_INSTALL_DIR)}[/warning]")
+        if not Confirm.ask(t("install.replace"), default=False):
+            console.print(f"[error]{t('install.aborted')}[/error]")
             sys.exit(1)
         subprocess.run(["rm", "-rf", str(APP_INSTALL_DIR)], check=True)
     APP_INSTALL_DIR.mkdir(parents=True, exist_ok=True)
@@ -153,23 +150,23 @@ def install_source() -> bool:
 
     if _is_source_dir() and source_dir != APP_INSTALL_DIR:
         # Already in a local clone — copy instead of re-cloning
-        console.print(f"[dim]Copying source from {source_dir}...[/dim]")
+        console.print(f"[dim]{t('install.copying', src=source_dir)}[/dim]")
         # Remove first to ensure clean copy (prepare_install_dir may have created it)
         if APP_INSTALL_DIR.exists():
             subprocess.run(["rm", "-rf", str(APP_INSTALL_DIR)], check=True)
         subprocess.run(["cp", "-a", str(source_dir), str(APP_INSTALL_DIR)], check=True)
         # Fix ownership so git doesn't complain about "dubious ownership"
         subprocess.run(["chown", "-R", "root:root", str(APP_INSTALL_DIR)], check=False)
-        console.print("[success]✔ Source copied (no re-clone needed)[/success]")
+        console.print(f"[success]✔ {t('install.copied')}[/success]")
         return True
 
     # Not running from source — clone from GitHub
-    console.print(f"[dim]Cloning {REPO_URL}...[/dim]")
+    console.print(f"[dim]{t('install.cloning', url=REPO_URL)}[/dim]")
     r = subprocess.run(["git", "clone", "--depth", "1", REPO_URL, str(APP_INSTALL_DIR)], check=False)
     if r.returncode == 0:
-        console.print("[success]✔ Repository cloned[/success]")
+        console.print(f"[success]✔ {t('install.cloned')}[/success]")
         return True
-    console.print("[error]✘ Failed to clone repository[/error]")
+    console.print(f"[error]✘ {t('install.clone_failed')}[/error]")
     return False
 
 
@@ -177,16 +174,16 @@ def install_source() -> bool:
 
 def create_venv_and_install():
     venv_path = APP_INSTALL_DIR / VENV_DIR_NAME
-    console.print("[dim]Creating virtual environment...[/dim]")
+    console.print(f"[dim]{t('install.creating_venv')}[/dim]")
     subprocess.run([sys.executable, "-m", "venv", str(venv_path)], check=True)
 
     pip = str(venv_path / "bin" / "pip")
     req = APP_INSTALL_DIR / REQUIREMENTS
     if req.exists():
-        console.print("[dim]Installing Python requirements...[/dim]")
+        console.print(f"[dim]{t('install.installing_pip')}[/dim]")
         subprocess.run([pip, "install", "--quiet", "-r", str(req)], check=False)
     else:
-        console.print("[warning]requirements.txt not found — skipping pip install.[/warning]")
+        console.print(f"[warning]{t('install.no_requirements')}[/warning]")
 
 
 # ── Launcher script ────────────────────────────────────────────────────────────
@@ -202,7 +199,7 @@ def create_launcher():
     if APP_BIN_PATH.exists():
         APP_BIN_PATH.unlink()
     shutil.move(str(launcher), str(APP_BIN_PATH))
-    console.print(f"[success]✔ Launcher installed at {APP_BIN_PATH}[/success]")
+    console.print(f"[success]✔ {t('install.launcher_ok', path=APP_BIN_PATH)}[/success]")
 
 
 # ── User directories ───────────────────────────────────────────────────────────
@@ -218,8 +215,8 @@ def create_user_directories():
     USER_TOOLS_DIR.mkdir(parents=True, exist_ok=True)
     if not USER_CONFIG_FILE.exists():
         USER_CONFIG_FILE.write_text(json.dumps(DEFAULT_CONFIG, indent=2, sort_keys=True))
-        console.print(f"[success]✔ Config created at {USER_CONFIG_FILE}[/success]")
-    console.print(f"[success]✔ Tools directory: {USER_TOOLS_DIR}[/success]")
+        console.print(f"[success]✔ {t('install.config_ok', path=USER_CONFIG_FILE)}[/success]")
+    console.print(f"[success]✔ {t('install.tools_dir_ok', dir=USER_TOOLS_DIR)}[/success]")
 
 
 # ── Entry point ────────────────────────────────────────────────────────────────
@@ -229,7 +226,7 @@ def main():
     console.clear()
 
     console.print(Panel(
-        Text(f"HackingTool Installer  {VERSION_DISPLAY}", style="bold magenta"),
+        Text(t("install.title", version=VERSION_DISPLAY), style="bold magenta"),
         box=box.DOUBLE, border_style="bright_magenta",
     ))
 
@@ -239,7 +236,7 @@ def main():
         sys.exit(1)
 
     with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.description}")) as p:
-        p.add_task("Installing system packages...", total=None)
+        p.add_task(t("install.installing_deps", mgr=CURRENT_OS.pkg_manager or "pkg"), total=None)
         install_system_packages()
 
     prepare_install_dir()
@@ -248,15 +245,14 @@ def main():
         sys.exit(1)
 
     with Progress(SpinnerColumn(), TextColumn("[progress.description]{task.description}")) as p:
-        p.add_task("Setting up virtualenv & requirements...", total=None)
+        p.add_task(t("install.creating_venv"), total=None)
         create_venv_and_install()
 
     create_launcher()
     create_user_directories()
 
     console.print(Panel(
-        "[bold magenta]Installation complete![/bold magenta]\n\n"
-        "Type [bold cyan]hackingtool[/bold cyan] in a terminal to start.",
+        f"[bold magenta]{t('install.complete')}[/bold magenta]",
         border_style="magenta",
     ))
 
@@ -265,8 +261,8 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        console.print("\n[error]Installation interrupted.[/error]")
+        console.print(f"\n[error]{t('install.interrupted')}[/error]")
         sys.exit(1)
     except subprocess.CalledProcessError as e:
-        console.print(f"[error]Command failed: {e}[/error]")
+        console.print(f"[error]{t('install.cmd_failed', e=e)}[/error]")
         sys.exit(1)

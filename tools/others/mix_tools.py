@@ -8,8 +8,8 @@ from rich import box
 class TerminalMultiplexer(HackingTool):
     TITLE = "Terminal Multiplexer"
     DESCRIPTION = (
-        "Terminal Multiplexer (tilix) is a tiling terminal emulator that "
-        "allows opening several terminal sessions inside one window."
+        "Terminal Multiplexer (tilix) 是一个平铺式终端模拟器，"
+        "允许在一个窗口中打开多个终端会话。"
     )
     # Bug 19 fix: tilix is a Debian/Ubuntu package only — mark Linux-only
     INSTALL_COMMANDS = ["sudo apt-get install -y tilix"]
@@ -23,9 +23,9 @@ class TerminalMultiplexer(HackingTool):
 class Crivo(HackingTool):
     TITLE = "Crivo"
     DESCRIPTION = (
-        "A tool for extracting and filtering URLs, IPs, domains, and subdomains\n"
-        "from web pages or text, with built-in web scraping capabilities.\n"
-        "See: python3 crivo_cli.py -h"
+        "用于从网页或文本中提取和过滤 URL、IP、域名和子域名的工具，\n"
+        "内置网络爬取功能。\n"
+        "使用方法: python3 crivo_cli.py -h"
     )
     INSTALL_COMMANDS = [
         "git clone https://github.com/GMDSantana/crivo.git",
@@ -40,7 +40,7 @@ class Crivo(HackingTool):
 
 
 class MixTools(HackingToolsCollection):
-    TITLE = "Mix tools"
+    TITLE = "混合工具"
     TOOLS = [
         TerminalMultiplexer(),
         Crivo()

@@ -2,15 +2,13 @@ import os
 import subprocess
 
 from core import HackingTool, HackingToolsCollection, console
+from i18n import t
 
 
 class TheFatRat(HackingTool):
     TITLE = "The FatRat"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = (
-        "TheFatRat provides an easy way to create backdoors and payloads "
-        "which can bypass most anti-virus."
-    )
+    DESCRIPTION = "TheFatRat 提供了一种创建后门和 Payload 的简便方法，可以绕过大多数杀毒软件。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/Screetsec/TheFatRat.git",
         "cd TheFatRat && chmod +x setup.sh",
@@ -41,10 +39,7 @@ class TheFatRat(HackingTool):
 class Brutal(HackingTool):
     TITLE = "Brutal"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = (
-        "Brutal is a toolkit to quickly create various payloads, powershell attacks, "
-        "virus attacks and launch listener for a Human Interface Device."
-    )
+    DESCRIPTION = "Brutal 是一个工具包，可快速创建各种 Payload、PowerShell 攻击、病毒攻击，并为 Human Interface Device 启动监听器。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/Screetsec/Brutal.git",
         "cd Brutal && chmod +x Brutal.sh",
@@ -54,22 +49,13 @@ class Brutal(HackingTool):
 
     def show_info(self):
         super().show_info()
-        console.print(
-            "[bold cyan]Requirements:[/bold cyan]\n"
-            "  - Arduino Software (v1.6.7+)\n"
-            "  - TeensyDuino\n"
-            "  - Linux udev rules\n"
-            "  See: https://github.com/Screetsec/Brutal/wiki/Install-Requirements"
-        )
+        console.print(t("payload.brutal_requirements"))
 
 
 class Stitch(HackingTool):
     TITLE = "Stitch"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = (
-        "Stitch is a Cross Platform Python Remote Administrator Tool.\n"
-        "[!] Refer to the project link for Windows & macOS support."
-    )
+    DESCRIPTION = "Stitch 是一个跨平台 Python 远程管理工具。\n[!] 关于 Windows 和 macOS 支持，请参考项目链接。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/nathanlopez/Stitch.git",
         "cd Stitch && pip install --user -r lnx_requirements.txt",
@@ -81,10 +67,7 @@ class Stitch(HackingTool):
 class MSFVenom(HackingTool):
     TITLE = "MSFvenom Payload Creator"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = (
-        "MSFvenom Payload Creator (MSFPC) is a wrapper to generate multiple "
-        "types of payloads, based on user choice."
-    )
+    DESCRIPTION = "MSFvenom Payload Creator (MSFPC) 是一个包装器，用于根据用户选择生成多种类型的 Payload。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/g0tmi1k/msfpc.git",
         "cd msfpc && chmod +x msfpc.sh",
@@ -96,7 +79,7 @@ class MSFVenom(HackingTool):
 class Venom(HackingTool):
     TITLE = "Venom Shellcode Generator"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Venom exploits apache2 webserver to deliver LAN payloads via fake webpages."
+    DESCRIPTION = "Venom 利用 Apache2 Web 服务器通过伪造网页传递 LAN Payload。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/r00t-3xp10it/venom.git",
         # Removed "sudo ./venom.sh -u" from install — interactive, runs the tool during install
@@ -108,7 +91,7 @@ class Venom(HackingTool):
 
 class Spycam(HackingTool):
     TITLE = "Spycam"
-    DESCRIPTION = "Generates a Win32 payload that captures webcam images every 1 minute."
+    DESCRIPTION = "生成一个每 1 分钟捕获一次摄像头图像的 Win32 Payload。"
     INSTALL_COMMANDS = [
         "git clone https://github.com/indexnotfound404/spycam.git",
         "cd spycam && bash install.sh && chmod +x spycam",
@@ -120,7 +103,7 @@ class Spycam(HackingTool):
 class MobDroid(HackingTool):
     TITLE = "Mob-Droid"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Generates metasploit payloads easily without typing long commands."
+    DESCRIPTION = "无需输入冗长命令即可轻松生成 Metasploit Payload。"
     INSTALL_COMMANDS = ["git clone https://github.com/kinghacker0/mob-droid.git"]
     RUN_COMMANDS = ["cd mob-droid && sudo python3 mob-droid.py"]
     PROJECT_URL = "https://github.com/kinghacker0/Mob-Droid"
@@ -129,14 +112,14 @@ class MobDroid(HackingTool):
 class Enigma(HackingTool):
     TITLE = "Enigma"
     SUPPORTED_OS = ["linux"]
-    DESCRIPTION = "Enigma is a Multiplatform payload dropper."
+    DESCRIPTION = "Enigma 是一个多平台 Payload 投放器。"
     INSTALL_COMMANDS = ["git clone https://github.com/UndeadSec/Enigma.git"]
     RUN_COMMANDS = ["cd Enigma && sudo python3 enigma.py"]
     PROJECT_URL = "https://github.com/UndeadSec/Enigma"
 
 
 class PayloadCreatorTools(HackingToolsCollection):
-    TITLE = "Payload creation tools"
+    TITLE = t("category.payload")
     # Bug 11 fix: show_options() override was missing `parent` parameter entirely —
     # the whole override is now deleted and the base class method is used instead.
     TOOLS = [

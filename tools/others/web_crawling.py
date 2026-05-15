@@ -7,7 +7,7 @@ from rich import box
 
 class GoSpider(HackingTool):
     TITLE = "Gospider"
-    DESCRIPTION = "Gospider - Fast web spider written in Go"
+    DESCRIPTION = "Gospider - 用 Go 编写的快速网络爬虫"
     INSTALL_COMMANDS = ["sudo go get -u github.com/jaeles-project/gospider"]
     PROJECT_URL = "https://github.com/jaeles-project/gospider"
 
@@ -16,7 +16,7 @@ class GoSpider(HackingTool):
 
 
 class WebCrawlingTools(HackingToolsCollection):
-    TITLE = "Web crawling"
+    TITLE = "网络爬虫"
     TOOLS = [GoSpider()]
 
 if __name__ == "__main__":
