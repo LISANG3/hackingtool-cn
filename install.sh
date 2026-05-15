@@ -14,7 +14,7 @@
 # ──────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
-REPO_URL="https://github.com/Z4nzu/hackingtool.git"
+REPO_URL="https://github.com/LISANG3/hackingtool-cn.git"
 INSTALL_DIR="/usr/share/hackingtool"
 BIN_PATH="/usr/bin/hackingtool"
 CONFIG_DIR="${SUDO_USER:+$(eval echo ~"$SUDO_USER")}/.hackingtool"

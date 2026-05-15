@@ -3,8 +3,8 @@ import platform
 import shutil as _shutil
 
 # ── Repository ────────────────────────────────────────────────────────────────
-REPO_OWNER   = "Z4nzu"
-REPO_NAME    = "hackingtool"
+REPO_OWNER   = "LISANG3"
+REPO_NAME    = "hackingtool-cn"
 REPO_URL     = f"https://github.com/{REPO_OWNER}/{REPO_NAME}.git"
 REPO_WEB_URL = f"https://github.com/{REPO_OWNER}/{REPO_NAME}"
 

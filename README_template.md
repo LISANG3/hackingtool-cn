@@ -4,14 +4,14 @@
 
 **All-in-One Hacking Tool for Security Researchers & Pentesters**
 
-[![License](https://img.shields.io/github/license/Z4nzu/hackingtool?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/github/license/LISANG3/hackingtool-cn?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![Version](https://img.shields.io/badge/version-2.0.0-brightgreen?style=flat-square)](#)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Kali%20%7C%20Parrot%20%7C%20macOS-informational?style=flat-square)](#)
-[![Stars](https://img.shields.io/github/stars/Z4nzu/hackingtool?style=flat-square)](https://github.com/Z4nzu/hackingtool/stargazers)
-[![Forks](https://img.shields.io/github/forks/Z4nzu/hackingtool?style=flat-square)](https://github.com/Z4nzu/hackingtool/network/members)
-[![Issues](https://img.shields.io/github/issues/Z4nzu/hackingtool?style=flat-square)](https://github.com/Z4nzu/hackingtool/issues)
-[![Last Commit](https://img.shields.io/github/last-commit/Z4nzu/hackingtool?style=flat-square)](https://github.com/Z4nzu/hackingtool/commits/master)
+[![Stars](https://img.shields.io/github/stars/LISANG3/hackingtool-cn?style=flat-square)](https://github.com/LISANG3/hackingtool-cn/stargazers)
+[![Forks](https://img.shields.io/github/forks/LISANG3/hackingtool-cn?style=flat-square)](https://github.com/LISANG3/hackingtool-cn/network/members)
+[![Issues](https://img.shields.io/github/issues/LISANG3/hackingtool-cn?style=flat-square)](https://github.com/LISANG3/hackingtool-cn/issues)
+[![Last Commit](https://img.shields.io/github/last-commit/LISANG3/hackingtool-cn?style=flat-square)](https://github.com/LISANG3/hackingtool-cn/commits/master)
 
 </div>
 
@@ -78,7 +78,7 @@ Issues or PRs that don't follow the title format may be closed without review.
 ### One-liner (recommended)
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/Z4nzu/hackingtool/master/install.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/LISANG3/hackingtool-cn/master/install.sh | sudo bash
 ```
 
 This handles everything — installs prerequisites, clones the repo, sets up a venv, and creates the `hackingtool` command.
@@ -86,7 +86,7 @@ This handles everything — installs prerequisites, clones the repo, sets up a v
 ### Manual install
 
 ```bash
-git clone https://github.com/Z4nzu/hackingtool.git
+git clone https://github.com/LISANG3/hackingtool-cn.git
 cd hackingtool
 sudo python3 install.py   # detects local source, copies instead of re-cloning
 ```
@@ -101,7 +101,7 @@ hackingtool
 ### Step 1 — Clone the repository
 
 ```bash
-git clone https://github.com/Z4nzu/hackingtool.git
+git clone https://github.com/LISANG3/hackingtool-cn.git
 cd hackingtool
 ```
 
@@ -161,9 +161,9 @@ pip install -r requirements.txt
 ## Star History
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Z4nzu/hackingtool&type=Date&theme=dark" />
-  <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Z4nzu/hackingtool&type=Date" />
-  <img alt="HackingTool Star History Chart" src="https://api.star-history.com/svg?repos=Z4nzu/hackingtool&type=Date" />
+  <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=LISANG3/hackingtool-cn&type=Date&theme=dark" />
+  <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=LISANG3/hackingtool-cn&type=Date" />
+  <img alt="HackingTool Star History Chart" src="https://api.star-history.com/svg?repos=LISANG3/hackingtool-cn&type=Date" />
 </picture>
 
 ---
@@ -176,4 +176,4 @@ pip install -r requirements.txt
 > **Please don't use for illegal activity.**
 > Thanks to all original authors of the tools included in hackingtool.
 
-Your favourite tool is not listed? [Suggest it here](https://github.com/Z4nzu/hackingtool/issues/new?template=tool_request.md)
+Your favourite tool is not listed? [Suggest it here](https://github.com/LISANG3/hackingtool-cn/issues/new?template=tool_request.md)
